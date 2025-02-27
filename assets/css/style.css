@@ -1,4 +1,233 @@
+/* Importation des polices */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Corps de la page */
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding-top: 80px; /* Ajustement pour éviter que le header fixe cache du contenu */
+}
+
+/* En-tête */
+header {
+    background: #333;
+    color: white;
+    padding: 15px 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 500px;
+    width: 80%;
+    margin: 50px auto 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Titres */
+h2, h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Tableaux */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #333;
+    color: white;
+}
+
+/* Formulaires */
+form {
+    margin-top: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background: #333;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #555;
+}
+
+/* Messages de succès et d'erreur */
+.success {
+    color: green;
+    border: 1px solid green;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: #d4edda;
+    border-radius: 5px;
+}
+
+.error {
+    color: red;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: #f8d7da;
+    border-radius: 5px;
+}
+
+/* Boutons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745; /* Vert plus moderne */
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    margin-left: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.footer-menu li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.footer-menu li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-menu li a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .footer-menu li {
+        display: block;
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .btn, .btn-cancel {
+        width: 100%;
+        margin-bottom: 10px;
+    }
 }

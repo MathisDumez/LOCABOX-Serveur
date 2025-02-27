@@ -1,0 +1,54 @@
+Les controllers hérite tous de CI_Controller :
+Vitrine_Controller
+Identification_Controller
+User_Controller
+Admin_Controller
+Code_Controller
+
+Model :
+Main_Model dont tous les autres Modeles hérite
+Vitrine_Model
+Identification_Model
+User_Model
+Admin_Model
+Code_Model
+
+Les vues :
+Vues de Vitrine_Controlleur
+vitrine_box.php (page principale pour choisir son box)
+page_box.php (info détaillé du box et choix des dates de reservation)
+
+Vues de Identification_Controller
+identification.php (Page de login)
+inscription.php (page d'inscription)
+
+Vues de User_Model
+dashboard_user.php (Page affichant les reservations en cours)
+reserver.php (page affichant les detailles de la reservation avant de la confirmer sur cette meme page)
+changement_mdp.php (page de changement de mdp)
+
+Vues de Admin_Model
+dashboard_admin.php (dashboard admin qui sert de menu principale pour naviguer vers les autres vue admin)
+etat_box.php (page affichant tout les infos sur un box)
+acces_box.php (page affichant l'historique de tout les entrees/sortie dans le box)
+alarme_box.php (page affichant l'historique des alarmes)
+historique_reservation.php (page affichant l'historique des reversations)
+historique_connexion_client.php (page affichant l'historique des connexion client)
+
+Vues de Code_Model
+gestion_code.php (page permettant de creer/supprimer les codes des boxs)
+historique_code.php (page affichant l'historique des box)
+
+include:
+header.php
+footer.php
+message.php (Gere les messages d'erreurs et log)
+
+MLD de la BDD :
+user_box = (id_user_box INT AUTO_INCREMENT, email VARCHAR(50) , password VARCHAR(255) , admin BOOLEAN, level INT);
+warehouse = (id_warehouse INT AUTO_INCREMENT, name VARCHAR(50) , address VARCHAR(50) );
+box = (id_box INT AUTO_INCREMENT, num INT, size INT, available BOOLEAN, current_code VARCHAR(6) , generated_code VARCHAR(6) , #id_warehouse);
+access_log = (access_date DATETIME, locked BOOLEAN, #id_box);
+alarm_log = (alarm_date DATETIME, info VARCHAR(150) , #id_box);
+code_log = (code_date DATETIME, code VARCHAR(6) , #id_box);
+rent = (#id_user_box, #id_box, rent_number INT AUTO_INCREMENT, start_reservation_date DATETIME, end_reservation_date DATETIME, status VARCHAR(20) );
