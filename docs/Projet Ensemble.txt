@@ -26,6 +26,7 @@ Vues de User_Model
 dashboard_user.php (Page affichant les reservations en cours)
 reserver.php (page affichant les detailles de la reservation avant de la confirmer sur cette meme page)
 changement_mdp.php (page de changement de mdp)
+confirmation_reservation.php (page qui affiche que la reversation est confirmer)
 
 Vues de Admin_Model
 dashboard_admin.php (dashboard admin qui sert de menu principale pour naviguer vers les autres vue admin)

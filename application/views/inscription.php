@@ -1,19 +1,20 @@
 <?php include('includes/header.php'); ?>
 
 <div class="container">
-    <h2>Inscription Client</h2>
+    <h2>Inscription</h2>
 
-    <?php if ($this->session->flashdata('success')) : ?>
-        <p class="success"><?php echo $this->session->flashdata('success'); ?></p>
-    <?php endif; ?>
+    <!-- Messages Flash -->
+    <?php foreach (['success', 'error'] as $type): ?>
+        <?php if ($message = $this->session->flashdata($type)) : ?>
+            <p class="<?= $type ?>"><?= htmlspecialchars($message) ?></p>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
-    <?php if ($this->session->flashdata('error')) : ?>
-        <p class="error"><?php echo $this->session->flashdata('error'); ?></p>
-    <?php endif; ?>
+    <form action="<?= site_url('Identification_Controller/process_inscription'); ?>" method="post">
+        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
-    <form action="<?php echo site_url('Identification_Controller/register'); ?>" method="post">
         <label>Email :</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" value="<?= set_value('email'); ?>" required>
 
         <label>Mot de passe :</label>
         <input type="password" name="password" required>
@@ -21,7 +22,7 @@
         <button type="submit" class="btn">S'inscrire</button>
     </form>
 
-    <p>Déjà un compte ? <a href="<?php echo site_url('Identification_Controller/identification'); ?>">Se connecter</a></p>
+    <p>Déjà un compte ? <a href="<?= site_url('Identification_Controller/identification'); ?>">Se connecter</a></p>
 </div>
 
 <?php include('includes/footer.php'); ?>

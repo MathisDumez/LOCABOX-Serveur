@@ -1,129 +1,80 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Identification_Controller extends CI_Controller {
-
     public function __construct() {
         parent::__construct();
         $this->load->model('Identification_Model');
-        $this->load->library('session');
+        $this->load->library(['session', 'form_validation']);
+        $this->lang->load('form_validation', 'french');
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
     }
 
-    // Afficher la page d'identification
     public function identification() {
-        // Rediriger si déjà connecté
         if ($this->session->userdata('id_user_box')) {
-            $redirect_url = $this->session->userdata('redirect_url') ?? 'User_Controller/dashboard';
-            $this->session->unset_userdata('redirect_url');
-            redirect($redirect_url);
+            redirect('User_Controller/dashboard');
         }
-
         $this->load->view('identification');
     }
 
-    // Gérer la connexion utilisateur
+    public function inscription() {
+        $this->load->view('inscription');
+    }
+
+    private function handle_form_validation(string $email, string $password): bool {
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'Mot de passe', 'required');
+        if ($this->form_validation->run() === FALSE) {
+            $this->session->set_flashdata('error', strip_tags(validation_errors()));
+            return false;
+        }
+        return true;
+    }
+
+    public function process_inscription() {
+        if (!$this->handle_form_validation($this->input->post('email'), $this->input->post('password'))) {
+            redirect('Identification_Controller/inscription');
+        }
+
+        $data = [
+            'email' => trim($this->input->post('email')),
+            'password' => trim($this->input->post('password')),
+            'admin' => 0,
+            'level' => 1
+        ];
+
+        if ($this->Identification_Model->register_user($data)) {
+            $this->session->set_flashdata('success', 'Inscription réussie, vous pouvez vous connecter.');
+            redirect('Identification_Controller/identification');
+        } else {
+            $this->session->set_flashdata('error', 'Erreur lors de l\'inscription.');
+            redirect('Identification_Controller/inscription');
+        }
+    }
+
     public function login() {
-        $email = trim($this->input->post('email', true));
-        $password = $this->input->post('password');
-
-        log_message('debug', 'Tentative de connexion pour : ' . $email);
-
-        // Vérifier l'email et le mot de passe
-        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->session->set_flashdata('error', 'Format d\'email invalide.');
+        if (!$this->handle_form_validation($this->input->post('email'), $this->input->post('password'))) {
             redirect('Identification_Controller/identification');
         }
 
-        if (empty($password)) {
-            $this->session->set_flashdata('error', 'Le mot de passe est requis.');
-            redirect('Identification_Controller/identification');
-        }
-
-        // Vérifier l'utilisateur
-        $user = $this->Identification_Model->check_user($email, $password);
-
+        $user = $this->Identification_Model->check_user($this->input->post('email'), $this->input->post('password'));
         if ($user) {
-            log_message('debug', 'Connexion réussie pour : ' . $email);
-
-            // Stocker les informations utilisateur
             $this->session->set_userdata([
                 'id_user_box' => $user->id_user_box,
                 'email' => $user->email,
                 'admin' => $user->admin
             ]);
-
-            // Si une réservation est en attente, rediriger vers sa validation
-            if ($this->session->userdata('reservation_temp')) {
-                $this->session->set_userdata('reservation_data', $this->session->userdata('reservation_temp'));
-                $this->session->unset_userdata('reservation_temp');
-                redirect('User_Controller/valider_reservation');
-            }
-
-            // Redirection après connexion
-            $redirect_url = $this->session->userdata('redirect_url') ?? 'Vitrine_Controller/index';
-            $this->session->unset_userdata('redirect_url');
-            redirect($redirect_url);
-        } else {
-            log_message('error', 'Échec de connexion pour : ' . $email);
-            $this->session->set_flashdata('error', 'Email ou mot de passe incorrect.');
-            redirect('Identification_Controller/identification');
+            log_message('error', "Utilisateur connecté : " . json_encode($this->session->userdata()));
+            redirect('Vitrine_Controller/index');
         }
+        
+        $this->session->set_flashdata('error', 'Email ou mot de passe incorrect.');
+        redirect('Identification_Controller/identification');
     }
 
-    // Déconnexion
     public function logout() {
         $this->session->sess_destroy();
         redirect('Vitrine_Controller/index');
-    }
-
-    // Afficher la page d'inscription client
-    public function inscription_client() {
-        if ($this->session->userdata('id_user_box')) {
-            redirect('Vitrine_Controller/index');
-        }
-        $this->load->view('inscription_client');
-    }
-
-    // Gérer l'inscription client
-    public function register() {
-        $email = trim($this->input->post('email', true));
-        $password = $this->input->post('password');
-
-        log_message('debug', 'Tentative d\'inscription pour : ' . $email);
-
-        // Vérifications des champs
-        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->session->set_flashdata('error', 'Format d\'email invalide.');
-            redirect('Identification_Controller/inscription_client');
-        }
-
-        if (empty($password) || strlen($password) < 6) {
-            $this->session->set_flashdata('error', 'Le mot de passe doit contenir au moins 6 caractères.');
-            redirect('Identification_Controller/inscription_client');
-        }
-
-        // Vérifier si l'email existe déjà
-        if ($this->Identification_Model->check_email_exists($email)) {
-            $this->session->set_flashdata('error', 'Cet email est déjà utilisé.');
-            redirect('Identification_Controller/inscription_client');
-        }
-
-        // Hachage du mot de passe et enregistrement
-        $data = [
-            'email' => htmlspecialchars($email),
-            'password' => password_hash($password, PASSWORD_ARGON2I),
-            'admin' => 0,
-            'level' => 1
-        ];
-
-        if ($this->Identification_Model->register_client($data)) {
-            log_message('debug', 'Inscription réussie pour : ' . $email);
-            $this->session->set_flashdata('success', 'Inscription réussie, veuillez vous connecter.');
-            redirect('Identification_Controller/identification');
-        } else {
-            log_message('error', 'Échec de l\'inscription pour : ' . $email);
-            $this->session->set_flashdata('error', 'Erreur lors de l\'inscription.');
-            redirect('Identification_Controller/inscription_client');
-        }
     }
 }
 ?>
