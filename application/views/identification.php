@@ -22,7 +22,7 @@
         <button type="submit" class="btn">Se connecter</button>
     </form>
 
-    <p>Pas encore inscrit ? <a href="<?= site_url('Identification_Controller/inscription'); ?>">Créer un compte</a></p>
+    <p>Pas encore inscrit ? <a href="<?= site_url('inscription'); ?>">Créer un compte</a></p>
 </div>
 
 <?php include('includes/footer.php'); ?>

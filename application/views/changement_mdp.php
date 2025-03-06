@@ -11,7 +11,9 @@
         <p class="success"> <?= htmlspecialchars($this->session->flashdata('success')) ?> </p>
     <?php endif; ?>
 
-    <form action="<?= site_url('User_Controller/update_password'); ?>" method="post">
+    <form action="<?= site_url('user/update_password'); ?>" method="post">
+        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+        
         <label>Ancien Mot de Passe :</label>
         <input type="password" name="old_password" required>
 

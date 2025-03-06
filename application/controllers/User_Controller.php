@@ -9,9 +9,13 @@ class User_Controller extends CI_Controller {
     }
 
     private function check_auth() {
+        // Vérifier si l'utilisateur est authentifié
         if (!$this->session->userdata('id_user_box')) {
-            $this->session->set_flashdata('error', 'Veuillez vous connecter.');
-            redirect('Identification_Controller/identification');
+            // Vérifier si la redirection vers 'identification' est déjà en cours
+            if ($this->uri->segment(1) != 'identification') {
+                $this->session->set_flashdata('error', 'Veuillez vous connecter.');
+                redirect('identification');
+            }
         }
     }
 
@@ -45,7 +49,7 @@ class User_Controller extends CI_Controller {
         }
 
         $this->session->unset_userdata('reservation_data');
-        redirect('User_Controller/reserver');
+        redirect('user/reserver');
     }
 
     public function changement_mdp() {
@@ -56,18 +60,36 @@ class User_Controller extends CI_Controller {
     public function update_password() {
         $this->check_auth();
 
+        if ($this->input->post('new_password') !== $this->input->post('confirm_password')) {
+            $this->session->set_flashdata('error', 'Les mots de passe ne correspondent pas.');
+            redirect('user/change_password');
+        }
         $this->form_validation->set_rules('new_password', 'Mot de passe', 'required|min_length[8]');
         if ($this->form_validation->run() === FALSE) {
             $this->session->set_flashdata('error', 'Le mot de passe doit contenir au moins 8 caractères.');
-            redirect('User_Controller/changement_mdp');
+            redirect('user/change_password');
         }
 
-        if ($this->User_Model->update_password($this->session->userdata('id_user_box'), $this->input->post('new_password'))) {
-            $this->session->set_flashdata('success', 'Mot de passe mis à jour avec succès.');
+        // Mise à jour du mot de passe
+        $update_status = $this->User_Model->update_password($this->session->userdata('id_user_box'), $this->input->post('new_password'));
+        
+        if ($update_status['status']) {
+            $this->session->set_flashdata('success', $update_status['message']);
         } else {
-            $this->session->set_flashdata('error', 'Erreur lors de la mise à jour du mot de passe.');
+            $this->session->set_flashdata('error', $update_status['message']);
         }
-        redirect('User_Controller/changement_mdp');
+
+        redirect('user/dashboard');
+    }
+
+    public function dashboard_user() {
+        $this->check_auth();
+    
+        // Charger les réservations de l'utilisateur connecté
+        $data['reservations'] = $this->User_Model->get_reservations($this->session->userdata('id_user_box'));
+    
+        // Charger la vue
+        $this->load->view('dashboard_user', $data);
     }
 }
 ?>

@@ -37,6 +37,11 @@
             <?php endif; ?>
         </tbody>
     </table>
+
+    <div class="change-password">
+        <a href="<?= site_url('user/change_password'); ?>" class="btn">Changer de mot de passe</a>
+    </div>
+
 </div>
 
 <?php include('includes/footer.php'); ?>

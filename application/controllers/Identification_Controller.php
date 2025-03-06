@@ -12,7 +12,7 @@ class Identification_Controller extends CI_Controller {
 
     public function identification() {
         if ($this->session->userdata('id_user_box')) {
-            redirect('User_Controller/dashboard');
+            redirect('user/dashboard');
         }
         $this->load->view('identification');
     }
@@ -33,7 +33,7 @@ class Identification_Controller extends CI_Controller {
 
     public function process_inscription() {
         if (!$this->handle_form_validation($this->input->post('email'), $this->input->post('password'))) {
-            redirect('Identification_Controller/inscription');
+            redirect('inscription');
         }
 
         $data = [
@@ -45,32 +45,43 @@ class Identification_Controller extends CI_Controller {
 
         if ($this->Identification_Model->register_user($data)) {
             $this->session->set_flashdata('success', 'Inscription réussie, vous pouvez vous connecter.');
-            redirect('Identification_Controller/identification');
+            redirect('identification');
         } else {
             $this->session->set_flashdata('error', 'Erreur lors de l\'inscription.');
-            redirect('Identification_Controller/inscription');
+            redirect('inscription');
         }
     }
 
     public function login() {
         if (!$this->handle_form_validation($this->input->post('email'), $this->input->post('password'))) {
-            redirect('Identification_Controller/identification');
+            redirect('identification');
         }
-
+    
         $user = $this->Identification_Model->check_user($this->input->post('email'), $this->input->post('password'));
         if ($user) {
+            // Enregistrer les informations de l'utilisateur dans la session
             $this->session->set_userdata([
                 'id_user_box' => $user->id_user_box,
                 'email' => $user->email,
                 'admin' => $user->admin
             ]);
             log_message('error', "Utilisateur connecté : " . json_encode($this->session->userdata()));
-            redirect('Vitrine_Controller/index');
+    
+            // Récupérer l'URL de redirection
+            $redirect_url = $this->input->get('redirect', TRUE);  // Utilisation de TRUE pour éviter les XSS
+            
+            if ($redirect_url) {
+                // Si le paramètre redirect est présent, rediriger vers cette page
+                redirect($redirect_url);
+            } else {
+                // Si aucun redirect, rediriger vers la page d'accueil
+                redirect('Vitrine_Controller/index');
+            }
         }
         
         $this->session->set_flashdata('error', 'Email ou mot de passe incorrect.');
-        redirect('Identification_Controller/identification');
-    }
+        redirect('identification');
+    }     
 
     public function logout() {
         $this->session->sess_destroy();

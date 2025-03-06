@@ -19,16 +19,16 @@
 
             <?php if (!$this->session->userdata('id_user_box')) : ?>
                 <!-- Utilisateur NON connecté -->
-                <li><a href="<?php echo site_url('Identification_Controller/identification'); ?>"
+                <li><a href="<?php echo site_url('identification'); ?>"
                        class="<?php echo ($this->uri->segment(2) == 'identification') ? 'active' : ''; ?>">
                        Connexion
                     </a>
                 </li>
             <?php else : ?>
                 <!-- Utilisateur CONNECTÉ -->
-                <li><a href="<?php echo site_url('User_Controller/changement_mdp'); ?>"
-                       class="<?php echo ($this->uri->segment(2) == 'changement_mdp') ? 'active' : ''; ?>">
-                       Changer de mot de passe
+                <li><a href="<?php echo site_url('user/dashboard'); ?>"
+                       class="<?php echo ($this->uri->segment(2) == 'dashboard_user') ? 'active' : ''; ?>">
+                       Tableau de bord
                     </a>
                 </li>
 
@@ -36,8 +36,7 @@
                     <!-- Admin uniquement -->
                     <li><a href="<?php echo site_url('Admin_Controller/dashboard'); ?>"
                            class="<?php echo ($this->uri->segment(2) == 'dashboard') ? 'active' : ''; ?>">
-                           Tableau de bord Admin
-                        </a>
+                           Tableau de bord
                     </li>
                 <?php endif; ?>
 
