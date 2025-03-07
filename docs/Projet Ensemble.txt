@@ -22,13 +22,13 @@ Vues de Identification_Controller
 identification.php (Page de login)
 inscription.php (page d'inscription)
 
-Vues de User_Model
+Vues de User_Controller
 dashboard_user.php (Page affichant les reservations en cours)
 reserver.php (page affichant les detailles de la reservation avant de la confirmer sur cette meme page)
 changement_mdp.php (page de changement de mdp)
 confirmation_reservation.php (page qui affiche que la reversation est confirmer)
 
-Vues de Admin_Model
+Vues de Admin_Controller
 dashboard_admin.php (dashboard admin qui sert de menu principale pour naviguer vers les autres vue admin)
 etat_box.php (page affichant tout les infos sur un box)
 acces_box.php (page affichant l'historique de tout les entrees/sortie dans le box)
@@ -36,7 +36,7 @@ alarme_box.php (page affichant l'historique des alarmes)
 historique_reservation.php (page affichant l'historique des reversations)
 historique_connexion_client.php (page affichant l'historique des connexion client)
 
-Vues de Code_Model
+Vues de Code_Controller
 gestion_code.php (page permettant de creer/supprimer les codes des boxs)
 historique_code.php (page affichant l'historique des box)
 

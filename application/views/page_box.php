@@ -19,7 +19,8 @@
 
         <?php if (!empty($box->available)) : ?>
             <h3>Réserver ce box</h3>
-            <form method="post" action="<?= site_url('Vitrine_Controller/reserver'); ?>">
+            <form method="post" action="<?= site_url('user/reserver'); ?>">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
                 <input type="hidden" name="box_id" value="<?= htmlspecialchars($box->id_box); ?>">
 
                 <label for="start_date">Date de début :</label>
@@ -29,7 +30,9 @@
                 <input type="date" id="end_date" name="end_date" required min="<?= date('Y-m-d', strtotime('+1 day')); ?>">
 
                 <?php if (!$this->session->userdata('id_user_box')) : ?>
-                    <button type="submit" name="reserver" onclick="window.location.href='<?= site_url('Identification_Controller/identification'); ?>?redirect=<?= urlencode(current_url()); ?>'; return false;" class="btn">Se connecter pour réserver</button>
+                    <button type="submit" name="reserver"
+                        onclick="window.location.href='<?= site_url('identification?redirect=' . urlencode(current_url())); ?>'; return false;"
+                        class="btn">Se connecter pour réserver</button>
                 <?php else : ?>
                     <button type="submit" name="reserver" class="btn">Confirmer la réservation</button>
                 <?php endif; ?>

@@ -12,6 +12,7 @@
 
     <form action="<?= site_url('Identification_Controller/login'); ?>" method="post">
         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+        <input type="hidden" name="redirect" value="<?= isset($_GET['redirect']) ? htmlspecialchars($_GET['redirect']) : ''; ?>">
         
         <label>Email :</label>
         <input type="email" name="email" value="<?= set_value('email'); ?>" required>

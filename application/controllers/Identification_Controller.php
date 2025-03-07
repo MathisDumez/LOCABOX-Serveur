@@ -59,7 +59,6 @@ class Identification_Controller extends CI_Controller {
     
         $user = $this->Identification_Model->check_user($this->input->post('email'), $this->input->post('password'));
         if ($user) {
-            // Enregistrer les informations de l'utilisateur dans la session
             $this->session->set_userdata([
                 'id_user_box' => $user->id_user_box,
                 'email' => $user->email,
@@ -67,21 +66,18 @@ class Identification_Controller extends CI_Controller {
             ]);
             log_message('error', "Utilisateur connecté : " . json_encode($this->session->userdata()));
     
-            // Récupérer l'URL de redirection
-            $redirect_url = $this->input->get('redirect', TRUE);  // Utilisation de TRUE pour éviter les XSS
-            
-            if ($redirect_url) {
-                // Si le paramètre redirect est présent, rediriger vers cette page
+            // Récupération de l'URL de redirection
+            $redirect_url = $this->input->post('redirect');
+            if (!empty($redirect_url) && filter_var($redirect_url, FILTER_VALIDATE_URL)) {
                 redirect($redirect_url);
             } else {
-                // Si aucun redirect, rediriger vers la page d'accueil
                 redirect('Vitrine_Controller/index');
             }
         }
-        
+    
         $this->session->set_flashdata('error', 'Email ou mot de passe incorrect.');
         redirect('identification');
-    }     
+    }        
 
     public function logout() {
         $this->session->sess_destroy();
