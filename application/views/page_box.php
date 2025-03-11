@@ -17,26 +17,13 @@
             <p class="success"><?= htmlspecialchars($this->session->flashdata('success')) ?></p>
         <?php endif; ?>
 
+        <!-- Bouton de réservation -->
         <?php if (!empty($box->available)) : ?>
-            <h3>Réserver ce box</h3>
-            <form method="post" action="<?= site_url('user/reserver'); ?>">
-                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
-                <input type="hidden" name="box_id" value="<?= htmlspecialchars($box->id_box); ?>">
-
-                <label for="start_date">Date de début :</label>
-                <input type="date" id="start_date" name="start_date" required min="<?= date('Y-m-d'); ?>">
-
-                <label for="end_date">Date de fin :</label>
-                <input type="date" id="end_date" name="end_date" required min="<?= date('Y-m-d', strtotime('+1 day')); ?>">
-
-                <?php if (!$this->session->userdata('id_user_box')) : ?>
-                    <button type="submit" name="reserver"
-                        onclick="window.location.href='<?= site_url('identification?redirect=' . urlencode(current_url())); ?>'; return false;"
-                        class="btn">Se connecter pour réserver</button>
-                <?php else : ?>
-                    <button type="submit" name="reserver" class="btn">Confirmer la réservation</button>
-                <?php endif; ?>
-            </form>
+            <?php if (!$this->session->userdata('id_user_box')) : ?>
+                <a href="<?= site_url('identification?redirect=' . urlencode(current_url())); ?>" class="btn">Se connecter pour réserver</a>
+            <?php else : ?>
+                <a href="<?= site_url('user/reserver?box_id=' . $box->id_box); ?>" class="btn">Réserver ce box</a>
+            <?php endif; ?>
         <?php else : ?>
             <p class="error"><strong>Ce box est actuellement indisponible.</strong></p>
         <?php endif; ?>

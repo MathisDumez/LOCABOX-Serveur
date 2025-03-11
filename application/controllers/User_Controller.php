@@ -21,36 +21,58 @@ class User_Controller extends CI_Controller {
 
     public function reserver() {
         $this->check_auth();
-        $data['reservation'] = $this->session->userdata('reservation_data');
-        $this->load->view('reserver', $data);
-    }
-
-    public function valider_reservation() {
-        $this->check_auth();
-        $reservation_data = $this->session->userdata('reservation_data');
-
-        if (!$reservation_data) {
-            $this->session->set_flashdata('error', 'Aucune réservation en attente.');
+    
+        $box_id = $this->input->get('box_id');
+        if (!$box_id) {
+            $this->session->set_flashdata('error', 'Aucun box sélectionné.');
             redirect('Vitrine_Controller/index');
         }
-
+    
+        // Récupération des infos du box
+        $box = $this->User_Model->get_by_id('box', $box_id, 'id_box');
+        if (!$box) {
+            $this->session->set_flashdata('error', 'Box introuvable.');
+            redirect('Vitrine_Controller/index');
+        }
+    
+        $data['reservation'] = [
+            'box_id' => $box->id_box,
+            'box_num' => $box->num,
+            'box_size' => $box->size,
+            'warehouse_name' => $this->User_Model->get_by_id('warehouse', $box->id_warehouse, 'id_warehouse')->name ?? 'Indisponible'
+        ];
+    
+        $this->load->view('reserver', $data);
+    }
+    
+    public function valider_reservation() {
+        $this->check_auth();
+    
+        $box_id = $this->input->post('box_id');
+        $start_date = $this->input->post('start_date');
+        $end_date = $this->input->post('end_date');
+    
+        if (!$box_id || !$start_date || !$end_date) {
+            $this->session->set_flashdata('error', 'Informations de réservation incomplètes.');
+            redirect('user/reserver');
+        }
+    
         $data = [
             'id_user_box' => $this->session->userdata('id_user_box'),
-            'id_box' => $reservation_data['box_id'],
-            'start_reservation_date' => $reservation_data['start_date'],
-            'end_reservation_date' => $reservation_data['end_date'],
-            'status' => 'confirmé'
+            'id_box' => $box_id,
+            'start_reservation_date' => $start_date,
+            'end_reservation_date' => $end_date,
+            'status' => 'En Attente'
         ];
-
+    
         if ($this->db->insert('rent', $data)) {
-            $this->session->set_flashdata('success', 'Réservation confirmée !');
+            $this->session->set_flashdata('success', 'Réservation enregistrée en attente de validation.');
+            redirect('user/dashboard');
         } else {
             $this->session->set_flashdata('error', 'Erreur lors de la réservation.');
+            redirect('user/reserver');
         }
-
-        $this->session->unset_userdata('reservation_data');
-        redirect('user/reserver');
-    }
+    }    
 
     public function changement_mdp() {
         $this->check_auth();

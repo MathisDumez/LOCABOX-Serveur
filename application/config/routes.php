@@ -58,3 +58,4 @@ $route['user/dashboard'] = 'User_Controller/dashboard_user';
 $route['user/change_password'] = 'User_Controller/changement_mdp';
 $route['user/update_password'] = 'User_Controller/update_password';
 $route['user/reserver'] = 'User_Controller/reserver';
+$route['user/valider_reservation'] = 'User_Controller/valider_reservation';

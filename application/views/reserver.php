@@ -14,18 +14,20 @@
     <?php if (!empty($reservation)) : ?>
         <p><strong>Numéro du Box :</strong> <?= htmlspecialchars($reservation['box_num']); ?></p>
         <p><strong>Taille :</strong> <?= htmlspecialchars($reservation['box_size']); ?> m²</p>
-        <p><strong>Bâtiment :</strong> <?= htmlspecialchars($reservation['id_warehouse']); ?></p>
-        <p><strong>Période de réservation :</strong></p>
-        <p><strong>Début :</strong> <?= date('d/m/Y', strtotime($reservation['start_date'])); ?></p>
-        <p><strong>Fin :</strong> <?= date('d/m/Y', strtotime($reservation['end_date'])); ?></p>
+        <p><strong>Bâtiment :</strong> <?= htmlspecialchars($reservation['warehouse_name']); ?></p>
 
-        <form action="<?= site_url('User_Controller/valider_reservation'); ?>" method="post">
+        <form action="<?= site_url('user/valider_reservation'); ?>" method="post">
+            <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
             <input type="hidden" name="box_id" value="<?= htmlspecialchars($reservation['box_id']); ?>">
-            <input type="hidden" name="start_date" value="<?= htmlspecialchars($reservation['start_date']); ?>">
-            <input type="hidden" name="end_date" value="<?= htmlspecialchars($reservation['end_date']); ?>">
+
+            <label for="start_date">Date de début :</label>
+            <input type="date" id="start_date" name="start_date" required min="<?= date('Y-m-d'); ?>">
+
+            <label for="end_date">Date de fin :</label>
+            <input type="date" id="end_date" name="end_date" required min="<?= date('Y-m-d', strtotime('+1 day')); ?>">
 
             <button type="submit" class="btn">Confirmer la réservation</button>
-            <a href="javascript:history.back();" class="btn-cancel">Annuler</a>
+            <a href="javascript:history.back();" class="btn btn-cancel">Annuler</a>
         </form>
     <?php else : ?>
         <div class="alert alert-warning">Aucune réservation en attente.</div>
