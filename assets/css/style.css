@@ -47,7 +47,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #17a2b8;
+    color: #09ABEB;
 }
 
 /* Footer */
@@ -56,8 +56,6 @@ footer {
     color: white;
     text-align: center;
     padding: 15px 0;
-    position: relative;
-    bottom: 0;
     width: 100%;
     margin-top: 20px;
 }
@@ -86,7 +84,7 @@ footer {
 }
 
 .footer-links li a:hover {
-    color: #17a2b8;
+    color: #09ABEB;
 }
 
 .footer-social-icons {
@@ -95,8 +93,9 @@ footer {
 
 .footer-social-icons img {
     width: 40px;
-    height: 40px; 
+    height: 40px;
     object-fit: cover;
+    transition: transform 0.3s;
 }
 
 .footer-social-icons img:hover {
@@ -143,7 +142,7 @@ button {
 }
 
 button:hover {
-    background: #138496;
+    background: #09ABEB;
 }
 
 /* Messages de succès et d'erreur */
@@ -169,16 +168,17 @@ button:hover {
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #09ABEB;
     color: white;
     border-radius: 5px;
     text-decoration: none;
     font-size: 16px;
-    transition: background 0.3s;
+    transition: background 0.3s, color 0.3s;
 }
 
 .btn:hover {
-    background-color: #218838;
+    background-color: #0979a5;
+    color: white;
 }
 
 .btn-cancel {
@@ -194,6 +194,20 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+}
+
+table a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+table a:hover {
+    color: #09ABEB;
+}
+
+table .btn:hover {
+    color: white;
 }
 
 th, td {

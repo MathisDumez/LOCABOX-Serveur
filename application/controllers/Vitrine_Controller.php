@@ -9,19 +9,31 @@ class Vitrine_Controller extends CI_Controller {
         $this->load->library('session');
     }
 
-    // Page principale avec tri des box
+    // Page principale avec filtres et tri
     public function index() {
-        $sort = $this->input->get('sort'); 
-        $data['boxes'] = $this->Vitrine_Model->get_sorted_boxes($sort);
+        $filters = [
+            'size' => $this->input->get('size', true),
+            'available' => $this->input->get('available', true),
+            'warehouse' => $this->input->get('warehouse', true)
+        ];
+        $sort = $this->input->get('sort', true) ?? 'num';
+        $order = $this->input->get('order', true) ?? 'ASC';
+
+        $data['boxes'] = $this->Vitrine_Model->get_filtered_boxes($filters, $sort, $order);
+        $data['warehouses'] = $this->Vitrine_Model->get_warehouses(); // Récupération des bâtiments
+
         $this->load->view('vitrine_box', $data);
     }
 
     // Détails d'un box
     public function detail($id) {
         $id = (int) $id;
-        if ($id <= 0 || !($data['box'] = $this->Vitrine_Model->get_box_details($id))) {
+        $data['box'] = $this->Vitrine_Model->get_box_details($id);
+
+        if (!$data['box']) {
             $this->session->set_flashdata('error', 'Box introuvable.');
             redirect('Vitrine_Controller/index');
+            return;
         }
         $this->load->view('page_box', $data);
     }

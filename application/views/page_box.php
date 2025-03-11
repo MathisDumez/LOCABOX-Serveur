@@ -6,7 +6,7 @@
     <?php if (!empty($box)) : ?>
         <p><strong>Numéro :</strong> <?= htmlspecialchars($box->num ?? 'Indisponible'); ?></p>
         <p><strong>Taille :</strong> <?= htmlspecialchars($box->size ?? 'Indisponible'); ?> m²</p>
-        <p><strong>Bâtiment :</strong> <?= htmlspecialchars($box->id_warehouse ?? 'Indisponible'); ?></p>
+        <p><strong>Bâtiment :</strong> <?= htmlspecialchars($box->warehouse_name ?? 'Indisponible'); ?></p>
         <p><strong>Disponibilité :</strong> <?= isset($box->available) ? ($box->available ? 'Oui' : 'Non') : 'Indisponible'; ?></p>
 
         <!-- Messages Flash -->
