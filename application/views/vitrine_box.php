@@ -13,13 +13,6 @@
             <?php endforeach; ?>
         </select>
 
-        <label for="available">Disponibilité :</label>
-        <select name="available" id="available">
-            <option value="">Toutes</option>
-            <option value="1" <?= isset($_GET['available']) && $_GET['available'] == '1' ? 'selected' : ''; ?>>Disponible</option>
-            <option value="0" <?= isset($_GET['available']) && $_GET['available'] == '0' ? 'selected' : ''; ?>>Indisponible</option>
-        </select>
-
         <label for="warehouse">Bâtiment :</label>
         <select name="warehouse" id="warehouse">
             <option value="">Tous</option>
@@ -28,6 +21,13 @@
                     <?= htmlspecialchars($w->name); ?>
                 </option>
             <?php endforeach; ?>
+        </select>
+
+        <label for="available">Disponibilité :</label>
+        <select name="available" id="available">
+            <option value="">Toutes</option>
+            <option value="1" <?= isset($_GET['available']) && $_GET['available'] == '1' ? 'selected' : ''; ?>>Disponible</option>
+            <option value="0" <?= isset($_GET['available']) && $_GET['available'] == '0' ? 'selected' : ''; ?>>Indisponible</option>
         </select>
 
         <button type="submit" class="btn">Filtrer</button>
@@ -39,7 +39,7 @@
             <thead>
                 <tr>
                     <?php
-                    $sort_fields = ['num' => 'Numéro', 'size' => 'Taille', 'available' => 'Disponibilité'];
+                    $sort_fields = ['num' => 'Numéro', 'size' => 'Taille', 'available' => 'Bâtiment'];
                     $current_sort = htmlspecialchars($_GET['sort'] ?? 'num');
                     $current_order = htmlspecialchars($_GET['order'] ?? 'ASC');
 
@@ -48,8 +48,8 @@
                     ?>
                         <th><a href="<?= site_url("Vitrine_Controller/index?sort=" . urlencode($key) . "&order=" . urlencode($new_order)) ?>"><?= $label; ?></a></th>
                     <?php endforeach; ?>
-                    <th>Bâtiment</th>
-                    <th>Actions</th>
+                    <th>Disponibilité</th>
+                    <th>Réservation</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,7 +60,7 @@
                         <td><?= htmlspecialchars($box->warehouse_name ?? 'Indisponible'); ?></td>
                         <td><?= $box->available ? 'Disponible' : 'Indisponible'; ?></td>
                         <td>
-                            <a href="<?= site_url('Vitrine_Controller/detail/' . $box->id_box); ?>" class="btn">Voir</a>
+                            <a href="<?= site_url('Vitrine_Controller/detail/' . $box->id_box); ?>" class="btn">Réserver</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

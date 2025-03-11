@@ -28,7 +28,7 @@
                 <!-- Utilisateur CONNECTÉ -->
                 <li><a href="<?php echo site_url('user/dashboard'); ?>"
                        class="<?php echo ($this->uri->segment(2) == 'dashboard_user') ? 'active' : ''; ?>">
-                       Tableau de bord
+                       Mes Réservations
                     </a>
                 </li>
 

@@ -38,13 +38,14 @@ class User_Model extends Main_Model {
             return [];
         }
     
-        $this->db->select('box.num AS box_num, rent.start_reservation_date, rent.end_reservation_date, rent.status');
+        $this->db->select('box.num AS box_num, box.size AS box_size, warehouse.name AS warehouse_name, rent.start_reservation_date, rent.end_reservation_date, rent.status');
         $this->db->from('rent');
         $this->db->join('box', 'box.id_box = rent.id_box');
+        $this->db->join('warehouse', 'warehouse.id_warehouse = box.id_warehouse'); // Jointure pour récupérer le bâtiment
         $this->db->where('rent.id_user_box', $id_user_box);
         $this->db->order_by('rent.start_reservation_date', 'DESC');
     
         return $this->db->get()->result();
-    }   
+    } 
 }
 ?>

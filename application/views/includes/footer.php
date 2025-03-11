@@ -7,7 +7,7 @@
             <?php if (!$this->session->userdata('id_user_box')) : ?>
                 <li><a href="<?php echo site_url('identification'); ?>">Connexion</a></li>
             <?php else : ?>
-                <li><a href="<?php echo site_url('user/dashboard'); ?>">Tableau de bord</a></li>
+                <li><a href="<?php echo site_url('user/dashboard'); ?>">Mes Réservations</a></li>
 
                 <?php if ($this->session->userdata('admin')) : ?>
                     <li><a href="<?php echo site_url('Admin_Controller/dashboard'); ?>">Tableau de bord</a></li>
