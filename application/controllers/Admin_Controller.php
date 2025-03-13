@@ -21,6 +21,13 @@ class Admin_Controller extends CI_Controller {
         $this->load->view('dashboard_admin', $data);
     }
 
+    public function etat_box() {
+        $this->check_admin(); // Vérifie si l'utilisateur est admin
+    
+        $data['boxes'] = $this->Admin_Model->get_all_boxes(); // Récupère la liste des box
+        $this->load->view('etat_box', $data); // Charge la vue etat_box.php
+    }    
+
     public function update_user($id_user_box) {
         $this->check_admin();
 
@@ -53,5 +60,17 @@ class Admin_Controller extends CI_Controller {
         $this->session->set_flashdata('success', 'Box mis à jour.');
         redirect('Admin_Controller/dashboard');
     }
+
+    public function acces_box($id_box) {
+        $this->check_admin(); // Vérifie que l'utilisateur est admin
+        $data['acces_logs'] = $this->Admin_Model->get_access_logs_by_box($id_box);
+        $this->load->view('acces_box', $data);
+    }
+    
+    public function alarme_box($id_box) {
+        $this->check_admin(); // Vérifie que l'utilisateur est admin
+        $data['alarms'] = $this->Admin_Model->get_alarm_logs_by_box($id_box);
+        $this->load->view('alarme_box', $data);
+    }    
 }
 ?>

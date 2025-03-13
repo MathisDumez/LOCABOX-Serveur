@@ -222,6 +222,46 @@ th {
     color: white;
 }
 
+/* Tableau de bord administrateur */
+.container h2 {
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+/* Liens du tableau de bord */
+.container ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.container ul li {
+    background: #17a2b8;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.container ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.container ul li:hover {
+    background: #0979a5;
+    transform: scale(1.05);
+}
+
+/* Ombre douce pour améliorer la visibilité du tableau de bord */
+.container {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
 /* Responsive */
 @media screen and (max-width: 768px) {
     .container {

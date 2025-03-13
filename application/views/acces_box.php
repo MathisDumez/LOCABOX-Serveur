@@ -26,8 +26,8 @@
                     <tr>
                         <td>Box <?= htmlspecialchars($log->id_box); ?></td>
                         <td><?= htmlspecialchars($log->user_email); ?></td>
-                        <td><?= date('d/m/Y H:i', strtotime($log->access_time)); ?></td>
-                        <td><?= htmlspecialchars($log->access_type); ?></td>
+                        <td><?= date('d/m/Y H:i', strtotime($log->access_date)); ?></td>
+                        <td><?= $log->locked ? 'Fermeture' : 'Ouverture'; ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
