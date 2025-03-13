@@ -107,11 +107,41 @@ class User_Controller extends CI_Controller {
     public function dashboard_user() {
         $this->check_auth();
     
-        // Charger les réservations de l'utilisateur connecté
-        $data['reservations'] = $this->User_Model->get_reservations($this->session->userdata('id_user_box'));
+        // Récupération des filtres depuis le formulaire
+        $size = $this->input->get('size');
+        $warehouse = $this->input->get('warehouse');
+        $status = $this->input->get('status');
+    
+        // Charger les entrepôts pour le filtrage
+        $data['warehouses'] = $this->User_Model->get_all('warehouse');
+        
+        // Charger les statuts possibles
+        $data['status'] = $this->User_Model->get_distinct_status();
+    
+        // Charger les réservations en fonction des filtres
+        $data['reservations'] = $this->User_Model->get_filtered_reservations(
+            $this->session->userdata('id_user_box'),
+            $size,
+            $warehouse,
+            $status
+        );
     
         // Charger la vue
         $this->load->view('dashboard_user', $data);
     }
+    
+    public function annuler_reservation($rent_number) {
+        $this->check_auth();
+    
+        $id_user_box = $this->session->userdata('id_user_box');
+    
+        if ($this->User_Model->cancel_reservation($rent_number, $id_user_box)) {
+            $this->session->set_flashdata('success', 'Réservation annulée avec succès.');
+        } else {
+            $this->session->set_flashdata('error', 'Impossible d\'annuler la réservation.');
+        }
+    
+        redirect('user/dashboard');
+    }    
 }
 ?>

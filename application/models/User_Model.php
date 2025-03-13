@@ -38,14 +38,53 @@ class User_Model extends Main_Model {
             return [];
         }
     
-        $this->db->select('box.num AS box_num, box.size AS box_size, warehouse.name AS warehouse_name, rent.start_reservation_date, rent.end_reservation_date, rent.status');
+        $this->db->select('rent.rent_number, box.num AS box_num, box.size AS box_size, warehouse.name AS warehouse_name, rent.start_reservation_date, rent.end_reservation_date, rent.status');
         $this->db->from('rent');
         $this->db->join('box', 'box.id_box = rent.id_box');
-        $this->db->join('warehouse', 'warehouse.id_warehouse = box.id_warehouse'); // Jointure pour récupérer le bâtiment
+        $this->db->join('warehouse', 'warehouse.id_warehouse = box.id_warehouse'); 
         $this->db->where('rent.id_user_box', $id_user_box);
         $this->db->order_by('rent.start_reservation_date', 'DESC');
     
         return $this->db->get()->result();
-    } 
+    }
+    
+    public function get_filtered_reservations($id_user_box, $size = null, $warehouse = null, $status = null) {
+        $this->db->select('rent.rent_number, box.num AS box_num, box.size AS box_size, warehouse.name AS warehouse_name, rent.start_reservation_date, rent.end_reservation_date, rent.status');
+        $this->db->from('rent');
+        $this->db->join('box', 'box.id_box = rent.id_box');
+        $this->db->join('warehouse', 'warehouse.id_warehouse = box.id_warehouse');
+        $this->db->where('rent.id_user_box', $id_user_box);
+    
+        if (!empty($size)) {
+            $this->db->where('box.size', $size);
+        }
+        if (!empty($warehouse)) {
+            $this->db->where('box.id_warehouse', $warehouse);
+        }
+        if (!empty($status)) {
+            $this->db->where('rent.status', $status);
+        }
+    
+        $this->db->order_by('rent.start_reservation_date', 'DESC');
+        return $this->db->get()->result();
+    }    
+    
+    // Nouvelle fonction pour récupérer les statuts distincts pour le filtrage
+    public function get_distinct_status() {
+        $this->db->distinct();
+        $this->db->select('status');
+        $this->db->from('rent');
+        return $this->db->get()->result();
+    }
+    
+    public function cancel_reservation($rent_number, $id_user_box) {
+        // Vérifier que la réservation appartient bien à l'utilisateur
+        $this->db->where('rent_number', $rent_number);
+        $this->db->where('id_user_box', $id_user_box);
+        $this->db->where('status !=', 'Annulée'); // Empêcher l'annulation d'une réservation déjà annulée
+    
+        // Modifier le statut en "Annulée"
+        return $this->db->update('rent', ['status' => 'Annulée']);
+    }    
 }
 ?>

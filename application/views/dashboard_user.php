@@ -2,7 +2,7 @@
 
 <div class="container">
     <h2>Mes Réservations</h2>
-
+    
     <!-- Messages Flash -->
     <?php if ($this->session->flashdata('success')) : ?>
         <p class="success"> <?= htmlspecialchars($this->session->flashdata('success')) ?> </p>
@@ -10,6 +10,44 @@
     <?php if ($this->session->flashdata('error')) : ?>
         <p class="error"> <?= htmlspecialchars($this->session->flashdata('error')) ?> </p>
     <?php endif; ?>
+
+    <!-- Formulaire de filtrage -->
+    <form method="GET" action="<?= site_url('user/dashboard'); ?>">
+        <label for="size">Taille :</label>
+        <select name="size" id="size">
+            <option value="">Toutes</option>
+            <?php foreach ([7, 40] as $s) : ?>
+                <option value="<?= $s; ?>" <?= isset($_GET['size']) && $_GET['size'] == $s ? 'selected' : ''; ?>><?= $s; ?> m²</option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="warehouse">Bâtiment :</label>
+        <select name="warehouse" id="warehouse">
+            <option value="">Tous</option>
+            <?php if (!empty($warehouses)) : ?>
+                <?php foreach ($warehouses as $w) : ?>
+                    <option value="<?= $w->id_warehouse; ?>" <?= isset($_GET['warehouse']) && $_GET['warehouse'] == $w->id_warehouse ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($w->name); ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+
+        <label for="status">Statut :</label>
+        <select name="status" id="status">
+            <option value="">Tous</option>
+            <?php if (!empty($status)) : ?>
+                <?php foreach ($status as $s) : ?>
+                    <option value="<?= $s->status; ?>" <?= isset($_GET['status']) && $_GET['status'] == $s->status ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($s->status); ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+
+        <button type="submit" class="btn">Filtrer</button>
+        <a href="<?= site_url('user/dashboard'); ?>" class="btn btn-reset">Réinitialiser</a>
+    </form>
 
     <table>
         <thead>
@@ -20,6 +58,7 @@
                 <th>Début</th>
                 <th>Fin</th>
                 <th>Statut</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +71,15 @@
                         <td><?= date('d/m/Y', strtotime($reservation->start_reservation_date)); ?></td>
                         <td><?= date('d/m/Y', strtotime($reservation->end_reservation_date)); ?></td>
                         <td><?= htmlspecialchars($reservation->status); ?></td>
+                        <td>
+                            <?php if ($reservation->status != 'Annulée') : ?>
+                                <a href="<?= site_url('user/annuler_reservation/' . $reservation->rent_number); ?>" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment annuler cette réservation ?');">
+                                    Annuler
+                                </a>
+                            <?php else : ?>
+                                <span class="text-muted">Annulée</span>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>

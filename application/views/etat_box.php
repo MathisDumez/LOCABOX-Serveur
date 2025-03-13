@@ -4,7 +4,7 @@
     <h2>État des Box</h2>
 
     <!-- Formulaire de filtrage -->
-    <form method="GET" action="<?= site_url('Vitrine_Controller/index'); ?>">
+    <form method="GET" action="<?= site_url('Admin_Controller/etat_box'); ?>">
         <label for="size">Taille :</label>
         <select name="size" id="size">
             <option value="">Toutes</option>
