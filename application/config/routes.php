@@ -59,6 +59,7 @@ $route['user/change_password'] = 'User_Controller/changement_mdp';
 $route['user/update_password'] = 'User_Controller/update_password';
 $route['user/reserver'] = 'User_Controller/reserver';
 $route['user/valider_reservation'] = 'User_Controller/valider_reservation';
+$route['user/annuler_reservation/(:num)'] = 'User_Controller/annuler_reservation/$1';
 $route['admin/etat_box'] = 'Admin_Controller/etat_box';
 $route['admin/acces_box/(:num)'] = 'Admin_Controller/acces_box/$1';
 $route['admin/alarme_box/(:num)'] = 'Admin_Controller/alarme_box/$1';

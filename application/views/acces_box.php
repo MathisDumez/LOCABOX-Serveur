@@ -15,16 +15,17 @@
         <thead>
             <tr>
                 <th>Box</th>
+                <th>Batiment</th>
                 <th>Utilisateur</th>
                 <th>Date et Heure</th>
                 <th>Type d'Accès</th>
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($access_logs)) : ?>
-                <?php foreach ($access_logs as $log) : ?>
+            <?php if (!empty($acces_logs)) : ?>
+                <?php foreach ($acces_logs as $log) : ?>
                     <tr>
-                        <td>Box <?= htmlspecialchars($log->id_box); ?></td>
+                        <td>Box <?= htmlspecialchars($log->num); ?></td>
                         <td><?= htmlspecialchars($log->user_email); ?></td>
                         <td><?= date('d/m/Y H:i', strtotime($log->access_date)); ?></td>
                         <td><?= $log->locked ? 'Fermeture' : 'Ouverture'; ?></td>

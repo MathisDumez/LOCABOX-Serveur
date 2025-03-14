@@ -63,7 +63,7 @@ class Admin_Controller extends CI_Controller {
 
     public function acces_box($id_box) {
         $this->check_admin(); // Vérifie que l'utilisateur est admin
-        $data['acces_logs'] = $this->Admin_Model->get_access_logs_by_box($id_box);
+        $data['access_logs'] = $this->Admin_Model->get_access_logs_by_box($id_box);
         $this->load->view('acces_box', $data);
     }
     

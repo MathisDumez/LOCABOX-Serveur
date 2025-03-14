@@ -34,14 +34,15 @@ class Admin_Model extends Main_Model {
     }
 
     public function get_access_logs_by_box($id_box) {
-        $this->db->select('access_log.*, user_box.email as user_email');
+        $this->db->select('access_log.*, user_box.email as user_email, box.num as box_num');
         $this->db->from('access_log');
+        $this->db->join('box', 'access_log.id_box = box.id_box', 'left'); // Récupérer le numéro du box
         $this->db->join('rent', 'access_log.id_box = rent.id_box', 'left');
-        $this->db->join('user_box', 'rent.id_user_box = user_box.id_user_box', 'left');
+        $this->db->join('user_box', 'rent.id_user_box = user_box.id_user_box', 'left'); // Associer un utilisateur
         $this->db->where('access_log.id_box', $id_box);
         $this->db->order_by('access_log.access_date', 'DESC'); // Trier du plus récent au plus ancien
         return $this->db->get()->result();
-    }
+    }    
     
     public function get_alarm_logs_by_box($id_box) {
         return $this->get_where('alarm_log', ['id_box' => $id_box]);

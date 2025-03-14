@@ -33,7 +33,7 @@ etat_box.php (page affichant tout les infos sur un box)
 acces_box.php (page affichant l'historique de tout les entrees/sortie dans le box)
 alarme_box.php (page affichant l'historique des alarmes)
 historique_reservation.php (page affichant l'historique des reversations)
-historique_connexion_client.php (page affichant l'historique des connexion client)
+gestion_client.php (page affichant les client; permet de suppr ou modifier des infos)
 
 Vues de Code_Controller
 gestion_code.php (page permettant de creer/supprimer les codes des boxs)
@@ -42,7 +42,6 @@ historique_code.php (page affichant l'historique des box)
 include:
 header.php
 footer.php
-message.php (Gere les messages d'erreurs et log)
 
 MLD de la BDD :
 user_box = (id_user_box INT AUTO_INCREMENT, email VARCHAR(50) , password VARCHAR(100) , admin BOOLEAN, level INT, fcm VARCHAR(200) );

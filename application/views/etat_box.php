@@ -1,7 +1,7 @@
 <?php include('includes/header.php'); ?>
 
 <div class="container">
-    <h2>État des Box</h2>
+    <h2>Gestion des Box</h2>
 
     <!-- Formulaire de filtrage -->
     <form method="GET" action="<?= site_url('Admin_Controller/etat_box'); ?>">
@@ -27,12 +27,14 @@
         <select name="available" id="available">
             <option value="">Toutes</option>
             <option value="1" <?= isset($_GET['available']) && $_GET['available'] == '1' ? 'selected' : ''; ?>>Disponible</option>
-            <option value="0" <?= isset($_GET['available']) && $_GET['available'] == '0' ? 'selected' : ''; ?>>Indisponible</option>
+            <option value="0" <?= isset($_GET['available']) && $_GET['available'] == '0' ? 'selected' : ''; ?>>Occupée</option>
         </select>
 
         <button type="submit" class="btn">Filtrer</button>
         <a href="<?= site_url('Vitrine_Controller/index'); ?>" class="btn btn-reset">Réinitialiser</a>
     </form>
+
+    <h2>État des Box</h2>
 
     <?php if (!empty($boxes)) : ?>
         <table>
