@@ -25,19 +25,21 @@
                     </a>
                 </li>
             <?php else : ?>
-                <!-- Utilisateur CONNECTÉ -->
-                <li><a href="<?php echo site_url('user/dashboard'); ?>"
-                       class="<?php echo ($this->uri->segment(2) == 'dashboard_user') ? 'active' : ''; ?>">
-                       Mes Réservations
-                    </a>
-                </li>
+                <!-- Utilisateur CONNECTÉ mais pas admin -->
+                <?php if (!$this->session->userdata('admin')) : ?>
+                    <li><a href="<?php echo site_url('user/dashboard'); ?>"
+                           class="<?php echo ($this->uri->segment(2) == 'dashboard_user') ? 'active' : ''; ?>">
+                           Mes Réservations
+                        </a>
+                    </li>
+                <?php endif; ?>
 
                 <?php if ($this->session->userdata('admin')) : ?>
                     <!-- Admin uniquement -->
-                    <li><a href="<?php echo site_url('Admin_Controller/dashboard'); ?>"
+                    <li><a href="<?php echo site_url('admin/dashboard'); ?>"
                            class="<?php echo ($this->uri->segment(2) == 'dashboard') ? 'active' : ''; ?>">
                            Tableau de bord
-                    </li>
+                    </a></li>
                 <?php endif; ?>
 
                 <li><a href="<?php echo site_url('Identification_Controller/logout'); ?>">Déconnexion</a></li>

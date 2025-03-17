@@ -32,7 +32,7 @@ dashboard_admin.php (dashboard admin qui sert de menu principale pour naviguer v
 etat_box.php (page affichant tout les infos sur un box)
 acces_box.php (page affichant l'historique de tout les entrees/sortie dans le box)
 alarme_box.php (page affichant l'historique des alarmes)
-historique_reservation.php (page affichant l'historique des reversations)
+gestion_reservation.php (page affichant l'historique des reversations)
 gestion_client.php (page affichant les client; permet de suppr ou modifier des infos)
 
 Vues de Code_Controller
@@ -46,8 +46,8 @@ footer.php
 MLD de la BDD :
 user_box = (id_user_box INT AUTO_INCREMENT, email VARCHAR(50) , password VARCHAR(100) , admin BOOLEAN, level INT, fcm VARCHAR(200) );
 warehouse = (id_warehouse INT AUTO_INCREMENT, name VARCHAR(50) , address VARCHAR(50) );
-box = (id_box INT AUTO_INCREMENT, num INT, size INT, available BOOLEAN, current_code VARCHAR(6) , generated_code VARCHAR(6) , #id_warehouse);
-rent = (rent_number INT AUTO_INCREMENT, start_reservation_date DATETIME, end_reservation_date DATETIME, status VARCHAR(20) , #id_box, #id_user_box);
+box = (id_box INT AUTO_INCREMENT, num INT, size INT, available BOOLEAN, current_code VARCHAR(6) , modem VARCHAR(100) , state DATETIME, #id_warehouse);
 access_log = (access_date DATETIME, locked BOOLEAN, #id_box);
 alarm_log = (alarm_date DATETIME, info VARCHAR(150) , #id_box);
-code_log = (code_date DATETIME, code VARCHAR(6) , #id_box);
+code_log = (code_date DATETIME, code VARCHAR(6) , sending_date DATETIME, issued TINYINT, received TINYINT, #id_box);
+rent = (#id_user_box, #id_box, rent_number INT AUTO_INCREMENT, start_reservation_date DATETIME, end_reservation_date DATETIME, status VARCHAR(20) );

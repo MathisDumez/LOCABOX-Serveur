@@ -7,18 +7,12 @@ class Vitrine_Model extends Main_Model {
     }
 
     // Récupérer les box avec filtres et tri sécurisé
-    public function get_filtered_boxes($filters = [], $sort = 'num', $order = 'ASC') {
-        $allowed_sorts = ['num', 'size', 'available', 'id_warehouse'];
-        $allowed_orders = ['ASC', 'DESC'];
-
-        $sort = in_array($sort, $allowed_sorts, true) ? $sort : 'num';
-        $order = in_array(strtoupper($order), $allowed_orders, true) ? strtoupper($order) : 'ASC';        
-
+    public function get_filtered_boxes($filters = [], $sort = 'available', $order = 'DESC') {
         $this->db->select('box.*, warehouse.name AS warehouse_name')
                  ->from('box')
                  ->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
-
-        // Appliquer dynamiquement les filtres s'ils existent et sont valides
+    
+        // Appliquer les filtres s'ils existent
         if (!empty($filters['size']) && is_numeric($filters['size'])) {
             $this->db->where('box.size', (int) $filters['size']);
         }
@@ -28,9 +22,14 @@ class Vitrine_Model extends Main_Model {
         if (!empty($filters['warehouse']) && is_numeric($filters['warehouse'])) {
             $this->db->where('box.id_warehouse', (int) $filters['warehouse']);
         }
-
-        return $this->db->order_by($sort, $order)->get()->result();
-    }
+    
+        // Tri par défaut : disponible en premier, puis bâtiment ASC, puis numéro ASC
+        $this->db->order_by('box.available', 'DESC')
+                 ->order_by('box.id_warehouse', 'ASC')
+                 ->order_by('box.num', 'ASC');
+    
+        return $this->db->get()->result();
+    }    
 
     // Récupérer la liste des bâtiments
     public function get_warehouses() {

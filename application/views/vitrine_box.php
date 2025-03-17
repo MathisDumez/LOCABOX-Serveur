@@ -38,16 +38,9 @@
         <table>
             <thead>
                 <tr>
-                    <?php
-                    $sort_fields = ['num' => 'Numéro', 'size' => 'Taille', 'available' => 'Bâtiment'];
-                    $current_sort = htmlspecialchars($_GET['sort'] ?? 'num');
-                    $current_order = htmlspecialchars($_GET['order'] ?? 'ASC');
-
-                    foreach ($sort_fields as $key => $label) :
-                        $new_order = ($current_sort === $key && $current_order === 'ASC') ? 'DESC' : 'ASC';
-                    ?>
-                        <th><a href="<?= site_url("Vitrine_Controller/index?sort=" . urlencode($key) . "&order=" . urlencode($new_order)) ?>"><?= $label; ?></a></th>
-                    <?php endforeach; ?>
+                    <th>Bâtiment</th>
+                    <th>Numéro</th>
+                    <th>Taille</th>
                     <th>Disponibilité</th>
                     <th>Réservation</th>
                 </tr>
@@ -55,9 +48,9 @@
             <tbody>
                 <?php foreach ($boxes as $box) : ?>
                     <tr>
+                        <td><?= htmlspecialchars($box->warehouse_name ?? 'Indisponible'); ?></td>
                         <td><?= htmlspecialchars($box->num); ?></td>
                         <td><?= htmlspecialchars($box->size); ?> m²</td>
-                        <td><?= htmlspecialchars($box->warehouse_name ?? 'Indisponible'); ?></td>
                         <td><?= $box->available ? 'Disponible' : 'Indisponible'; ?></td>
                         <td>
                             <a href="<?= site_url('Vitrine_Controller/detail/' . $box->id_box); ?>" class="btn">Réserver</a>
