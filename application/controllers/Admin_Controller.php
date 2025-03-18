@@ -125,6 +125,74 @@
             }
         
             redirect('admin/etat_box');
+        }
+        
+        public function gestion_reservation() {
+            $this->check_admin();
+        
+            // Récupération des filtres via GET
+            $filters = [
+                'email' => $this->input->get('email'),
+                'size' => $this->input->get('size'),
+                'warehouse' => $this->input->get('warehouse'),
+                'status' => $this->input->get('status'),
+                'start_date' => $this->input->get('start_date'),
+                'end_date' => $this->input->get('end_date'),
+            ];
+        
+            // Passer les filtres à la requête SQL
+            $data['reservations'] = $this->Admin_Model->get_all_reservations($filters);
+        
+            // Récupérer les entrepôts et statuts existants pour les listes déroulantes
+            $data['warehouses'] = $this->Admin_Model->get_all_warehouses();
+            $data['status'] = $this->db->select('DISTINCT(status)')->get('rent')->result();
+        
+            $this->load->view('gestion_reservation', $data);
+        }
+        
+        public function modifier_reservation($rent_number) {
+            $this->check_admin();
+        
+            $this->form_validation->set_rules('start_reservation_date', 'Date de début', 'required');
+            $this->form_validation->set_rules('end_reservation_date', 'Date de fin', 'required');
+            $this->form_validation->set_rules('status', 'Statut', 'required|in_list[En Attente,En Cours,Terminée,Annulée]');
+        
+            if ($this->form_validation->run() === FALSE) {
+                $this->session->set_flashdata('error', validation_errors());
+                redirect('admin/gestion_reservation');
+            }
+        
+            $data = [
+                'start_reservation_date' => $this->input->post('start_reservation_date'),
+                'end_reservation_date' => $this->input->post('end_reservation_date'),
+                'status' => $this->input->post('status')
+            ];
+        
+            if ($this->Admin_Model->update_reservation($rent_number, $data)) {
+                $this->session->set_flashdata('success', 'Réservation modifiée avec succès.');
+            } else {
+                $this->session->set_flashdata('error', 'Erreur lors de la modification.');
+            }
+        
+            redirect('admin/gestion_reservation');
+        }        
+
+        public function valider_reservation($rent_number) {
+            $this->check_admin();
+        
+            $reservation = $this->Admin_Model->get_by_id('rent', $rent_number, 'rent_number');
+            if (!$reservation || $reservation->status !== 'En Attente') {
+                $this->session->set_flashdata('error', 'Impossible de valider cette réservation.');
+                redirect('admin/gestion_reservation');
+            }
+        
+            if ($this->Admin_Model->valider_reservation($rent_number)) {
+                $this->session->set_flashdata('success', 'Réservation validée avec succès.');
+            } else {
+                $this->session->set_flashdata('error', 'Erreur lors de la validation.');
+            }
+        
+            redirect('admin/gestion_reservation');
         }        
     }
     ?>

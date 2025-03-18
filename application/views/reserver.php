@@ -3,13 +3,7 @@
 <div class="container">
     <h2>Confirmation de la Réservation</h2>
 
-    <!-- Messages Flash -->
-    <?php if ($this->session->flashdata('success')) : ?>
-        <p class="success"> <?= htmlspecialchars($this->session->flashdata('success')) ?> </p>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('error')) : ?>
-        <p class="error"> <?= htmlspecialchars($this->session->flashdata('error')) ?> </p>
-    <?php endif; ?>
+    <?php include('includes/message.php'); ?>
 
     <?php if (!empty($reservation)) : ?>
         <p><strong>Numéro du Box :</strong> <?= htmlspecialchars($reservation['box_num']); ?></p>
@@ -31,7 +25,7 @@
         </form>
     <?php else : ?>
         <div class="alert alert-warning">Aucune réservation en attente.</div>
-        <a href="<?= site_url('Vitrine_Controller/index'); ?>" class="btn">Retour à la liste des box</a>
+        <a href="<?= site_url('vitrine/index'); ?>" class="btn">Retour à la liste des box</a>
     <?php endif; ?>
 </div>
 

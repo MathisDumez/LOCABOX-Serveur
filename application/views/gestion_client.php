@@ -1,20 +1,14 @@
 <?php include('includes/header.php'); ?>
 
 <div class="container">
-    <h2>Historique des Connexions des Clients</h2>
+    <h2>Gestion des Clients</h2>
 
-    <!-- Messages Flash -->
-    <?php if ($this->session->flashdata('success')) : ?>
-        <p class="success"> <?= htmlspecialchars($this->session->flashdata('success')) ?> </p>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('error')) : ?>
-        <p class="error"> <?= htmlspecialchars($this->session->flashdata('error')) ?> </p>
-    <?php endif; ?>
+    <?php include('includes/message.php'); ?>
 
     <table>
         <thead>
             <tr>
-                <th>Utilisateur</th>
+                <th>Email</th>
                 <th>Date et Heure</th>
                 <th>Adresse IP</th>
             </tr>

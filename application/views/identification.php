@@ -3,14 +3,9 @@
 <div class="container">
     <h2>Connexion</h2>
 
-    <!-- Messages Flash -->
-    <?php foreach (['success', 'error'] as $type): ?>
-        <?php if ($message = $this->session->flashdata($type)) : ?>
-            <p class="<?= $type ?>"><?= htmlspecialchars($message) ?></p>
-        <?php endif; ?>
-    <?php endforeach; ?>
+    <?php include('includes/message.php'); ?>
 
-    <form action="<?= site_url('Identification_Controller/login'); ?>" method="post">
+    <form action="<?= site_url('id/login'); ?>" method="post">
         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
         <input type="hidden" name="redirect" value="<?= isset($_GET['redirect']) ? htmlspecialchars($_GET['redirect']) : ''; ?>">
         
@@ -23,7 +18,7 @@
         <button type="submit" class="btn">Se connecter</button>
     </form>
 
-    <p>Pas encore inscrit ? <a href="<?= site_url('inscription'); ?>">Créer un compte</a></p>
+    <p>Pas encore inscrit ? <a href="<?= site_url('id/inscription'); ?>">Créer un compte</a></p>
 </div>
 
 <?php include('includes/footer.php'); ?>

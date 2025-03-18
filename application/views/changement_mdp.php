@@ -3,13 +3,7 @@
 <div class="container">
     <h2>Changer de Mot de Passe</h2>
 
-    <!-- Messages Flash -->
-    <?php if ($this->session->flashdata('error')) : ?>
-        <p class="error"> <?= htmlspecialchars($this->session->flashdata('error')) ?> </p>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('success')) : ?>
-        <p class="success"> <?= htmlspecialchars($this->session->flashdata('success')) ?> </p>
-    <?php endif; ?>
+    <?php include('includes/message.php'); ?>
 
     <form action="<?= site_url('user/update_password'); ?>" method="post">
         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">

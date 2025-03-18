@@ -3,22 +3,16 @@
 <div class="container">
     <h2>Historique des Alarmes du Box</h2>
 
-    <a href="<?= site_url('admin/etat_box'); ?>" class="btn btn-secondary">Retour à l'état des boxs</a>
+    <?php include('includes/message.php'); ?>
 
-    <!-- Messages Flash -->
-    <?php if ($this->session->flashdata('success')) : ?>
-        <p class="success"><?= htmlspecialchars($this->session->flashdata('success')); ?></p>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('error')) : ?>
-        <p class="error"><?= htmlspecialchars($this->session->flashdata('error')); ?></p>
-    <?php endif; ?>
+    <a href="<?= site_url('admin/etat_box'); ?>" class="btn btn-secondary">Retour à l'état des boxs</a>
 
     <table>
         <thead>
             <tr>
                 <th>Bâtiment</th>
                 <th>Box</th>
-                <th>Utilisateur</th>
+                <th>Locataire</th>
                 <th>Date et Heure</th>
                 <th>Type d'Alarme</th>
             </tr>

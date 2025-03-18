@@ -3,13 +3,9 @@
 <div class="container">
     <h2>Gestion des Box</h2>
 
-    <a href="<?= site_url('admin/dashboard'); ?>" class="btn btn-secondary">Retour au tableau de bord</a>
+    <?php include('includes/message.php'); ?>
 
-    <?php foreach (['success', 'error'] as $type): ?>
-        <?php if ($message = $this->session->flashdata($type)) : ?>
-            <p class="<?= $type ?>"><?= htmlspecialchars($message) ?></p>
-        <?php endif; ?>
-    <?php endforeach; ?>
+    <a href="<?= site_url('admin/dashboard'); ?>" class="btn btn-secondary">Retour au tableau de bord</a>
 
     <form method="GET" action="<?= site_url('admin/etat_box'); ?>">
         <label for="size">Taille :</label>

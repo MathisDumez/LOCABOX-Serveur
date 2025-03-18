@@ -32,7 +32,7 @@ class Vitrine_Controller extends CI_Controller {
 
         if (!$data['box']) {
             $this->session->set_flashdata('error', 'Box introuvable.');
-            redirect('Vitrine_Controller/index');
+            redirect('vitrine/index');
             return;
         }
         $this->load->view('page_box', $data);

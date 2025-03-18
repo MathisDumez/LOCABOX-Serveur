@@ -3,15 +3,8 @@
 <div class="container">
     <h2>Mes Réservations</h2>
     
-    <!-- Messages Flash -->
-    <?php if ($this->session->flashdata('success')) : ?>
-        <p class="success"> <?= htmlspecialchars($this->session->flashdata('success')) ?> </p>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('error')) : ?>
-        <p class="error"> <?= htmlspecialchars($this->session->flashdata('error')) ?> </p>
-    <?php endif; ?>
+    <?php include('includes/message.php'); ?>
 
-    <!-- Formulaire de filtrage -->
     <form method="GET" action="<?= site_url('user/dashboard'); ?>">
         <label for="size">Taille :</label>
         <select name="size" id="size">

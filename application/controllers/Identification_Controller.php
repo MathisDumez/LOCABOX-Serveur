@@ -33,7 +33,7 @@ class Identification_Controller extends CI_Controller {
 
     public function process_inscription() {
         if (!$this->handle_form_validation($this->input->post('email'), $this->input->post('password'))) {
-            redirect('inscription');
+            redirect('id/inscription');
         }
 
         $data = [
@@ -45,16 +45,16 @@ class Identification_Controller extends CI_Controller {
 
         if ($this->Identification_Model->register_user($data)) {
             $this->session->set_flashdata('success', 'Inscription réussie, vous pouvez vous connecter.');
-            redirect('identification');
+            redirect('id/identification');
         } else {
             $this->session->set_flashdata('error', 'Erreur lors de l\'inscription.');
-            redirect('inscription');
+            redirect('id/inscription');
         }
     }
 
     public function login() {
         if (!$this->handle_form_validation($this->input->post('email'), $this->input->post('password'))) {
-            redirect('identification');
+            redirect('id/identification');
         }
     
         $user = $this->Identification_Model->check_user($this->input->post('email'), $this->input->post('password'));
@@ -71,17 +71,17 @@ class Identification_Controller extends CI_Controller {
             if (!empty($redirect_url) && filter_var($redirect_url, FILTER_VALIDATE_URL)) {
                 redirect($redirect_url);
             } else {
-                redirect('Vitrine_Controller/index');
+                redirect('vitrine/index');
             }
         }
     
         $this->session->set_flashdata('error', 'Email ou mot de passe incorrect.');
-        redirect('identification');
+        redirect('id/identification');
     }        
 
     public function logout() {
         $this->session->sess_destroy();
-        redirect('Vitrine_Controller/index');
+        redirect('vitrine/index');
     }
 }
 ?>

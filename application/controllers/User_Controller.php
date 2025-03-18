@@ -14,7 +14,7 @@ class User_Controller extends CI_Controller {
             // Vérifier si la redirection vers 'identification' est déjà en cours
             if ($this->uri->segment(1) != 'identification') {
                 $this->session->set_flashdata('error', 'Veuillez vous connecter.');
-                redirect('identification');
+                redirect('id/identification');
             }
         }
     }
@@ -25,14 +25,14 @@ class User_Controller extends CI_Controller {
         $box_id = $this->input->get('box_id');
         if (!$box_id) {
             $this->session->set_flashdata('error', 'Aucun box sélectionné.');
-            redirect('Vitrine_Controller/index');
+            redirect('vitrine/index');
         }
     
         // Récupération des infos du box
         $box = $this->User_Model->get_by_id('box', $box_id, 'id_box');
         if (!$box) {
             $this->session->set_flashdata('error', 'Box introuvable.');
-            redirect('Vitrine_Controller/index');
+            redirect('vitrine/index');
         }
     
         $data['reservation'] = [

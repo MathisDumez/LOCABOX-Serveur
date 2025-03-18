@@ -53,9 +53,18 @@ $route['default_controller'] = 'Vitrine_Controller';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['inscription'] = 'Identification_Controller/inscription';
-$route['identification'] = 'Identification_Controller/identification';
+#Vitrine_Controller
+$route['vitrine/index'] = 'Vitrine_Controller/index';
+$route['vitrine/detail/(:num)'] = 'Vitrine_Controller/detail/$1';
 
+#Identification_Controller
+$route['id/inscription'] = 'Identification_Controller/inscription';
+$route['id/process_inscription'] = 'Identification_Controller/process_inscription';
+$route['id/identification'] = 'Identification_Controller/identification';
+$route['id/login'] = 'Identification_Controller/login';
+$route['id/logout'] = 'Identification_Controller/logout';
+
+#User_Controller
 $route['user/dashboard'] = 'User_Controller/dashboard_user';
 $route['user/change_password'] = 'User_Controller/changement_mdp';
 $route['user/update_password'] = 'User_Controller/update_password';
@@ -63,8 +72,19 @@ $route['user/reserver'] = 'User_Controller/reserver';
 $route['user/valider_reservation'] = 'User_Controller/valider_reservation';
 $route['user/annuler_reservation/(:num)'] = 'User_Controller/annuler_reservation/$1';
 
+#Admin_Controller
 $route['admin/dashboard'] = 'Admin_Controller/dashboard';
+
 $route['admin/etat_box'] = 'Admin_Controller/etat_box';
 $route['admin/ajouter_box'] = 'Admin_Controller/ajouter_box';
 $route['admin/acces_box/(:num)'] = 'Admin_Controller/acces_box/$1';
 $route['admin/alarme_box/(:num)'] = 'Admin_Controller/alarme_box/$1';
+
+$route['admin/gestion_reservation'] = 'Admin_Controller/gestion_reservation';
+$route['admin/modifier_reservation/(:num)'] = 'Admin_Controller/modifier_reservation/$1';
+$route['admin/valider_reservation/(:num)'] = 'Admin_Controller/valider_reservation/$1';
+
+$route['admin/gestion_client'] = 'Admin_Controller/gestion_client';
+
+#Code_Controller
+$route['admin/gestion_code'] = 'Code_Controller/gestion_code';

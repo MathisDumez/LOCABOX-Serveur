@@ -11,7 +11,7 @@
 <header>
     <nav>
         <ul class="menu">
-            <li><a href="<?php echo site_url('Vitrine_Controller/index'); ?>" 
+            <li><a href="<?php echo site_url('vitrine/index'); ?>" 
                    class="<?php echo ($this->uri->segment(1) == 'Vitrine_Controller') ? 'active' : ''; ?>">
                    Accueil
                 </a>
@@ -19,7 +19,7 @@
 
             <?php if (!$this->session->userdata('id_user_box')) : ?>
                 <!-- Utilisateur NON connecté -->
-                <li><a href="<?php echo site_url('identification'); ?>"
+                <li><a href="<?php echo site_url('id/identification'); ?>"
                        class="<?php echo ($this->uri->segment(2) == 'identification') ? 'active' : ''; ?>">
                        Connexion
                     </a>
@@ -42,7 +42,7 @@
                     </a></li>
                 <?php endif; ?>
 
-                <li><a href="<?php echo site_url('Identification_Controller/logout'); ?>">Déconnexion</a></li>
+                <li><a href="<?php echo site_url('id/logout'); ?>">Déconnexion</a></li>
             <?php endif; ?>
         </ul>
     </nav>

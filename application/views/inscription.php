@@ -3,14 +3,9 @@
 <div class="container">
     <h2>Inscription</h2>
 
-    <!-- Messages Flash -->
-    <?php foreach (['success', 'error'] as $type): ?>
-        <?php if ($message = $this->session->flashdata($type)) : ?>
-            <p class="<?= $type ?>"><?= htmlspecialchars($message) ?></p>
-        <?php endif; ?>
-    <?php endforeach; ?>
+    <?php include('includes/message.php'); ?>
 
-    <form action="<?= site_url('Identification_Controller/process_inscription'); ?>" method="post">
+    <form action="<?= site_url('id/process_inscription'); ?>" method="post">
         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
         <label>Email :</label>
@@ -22,7 +17,7 @@
         <button type="submit" class="btn">S'inscrire</button>
     </form>
 
-    <p>Déjà un compte ? <a href="<?= site_url('identification'); ?>">Se connecter</a></p>
+    <p>Déjà un compte ? <a href="<?= site_url('id/identification'); ?>">Se connecter</a></p>
 </div>
 
 <?php include('includes/footer.php'); ?>

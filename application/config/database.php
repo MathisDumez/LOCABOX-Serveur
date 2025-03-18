@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '172.16.0.30',
+	'hostname' => 'ext.epid-vauban.fr',
 	'username' => 'locabox',
 	'password' => 'locabox2025!',
 	'database' => 'locabox',
