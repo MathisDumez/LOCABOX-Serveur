@@ -63,8 +63,7 @@
                 <th>Début</th>
                 <th>Fin</th>
                 <th>Statut</th>
-                <th>Modification</th>
-                <th>Validation</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -80,10 +79,9 @@
                         <td><?= htmlspecialchars($reservation->status); ?></td>
                         <td>
                             <a href="<?= site_url('admin/modifier_reservation/' . $reservation->rent_number); ?>" class="btn btn-edit">Modifier</a>
-                        </td>
-                        <td>
                             <?php if ($reservation->status == 'En Attente') : ?>
                                 <a href="<?= site_url('admin/valider_reservation/' . $reservation->rent_number); ?>" class="btn btn-success">Valider</a>
+                                <a href="<?= site_url('admin/annuler_reservation/' . $reservation->rent_number); ?>" class="btn btn-cancel">Annuler</a>
                             <?php endif; ?>
                         </td>
                     </tr>

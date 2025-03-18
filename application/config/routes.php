@@ -83,6 +83,7 @@ $route['admin/alarme_box/(:num)'] = 'Admin_Controller/alarme_box/$1';
 $route['admin/gestion_reservation'] = 'Admin_Controller/gestion_reservation';
 $route['admin/modifier_reservation/(:num)'] = 'Admin_Controller/modifier_reservation/$1';
 $route['admin/valider_reservation/(:num)'] = 'Admin_Controller/valider_reservation/$1';
+$route['admin/annuler_reservation/(:num)'] = 'Admin_Controller/annuler_reservation/$1';
 
 $route['admin/gestion_client'] = 'Admin_Controller/gestion_client';
 

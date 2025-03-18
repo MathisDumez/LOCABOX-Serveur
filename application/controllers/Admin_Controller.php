@@ -193,6 +193,24 @@
             }
         
             redirect('admin/gestion_reservation');
+        }
+        
+        public function annuler_reservation($rent_number) {
+            $this->check_admin();
+        
+            $reservation = $this->Admin_Model->get_by_id('rent', $rent_number, 'rent_number');
+            if (!$reservation || $reservation->status !== 'En Attente') {
+                $this->session->set_flashdata('error', 'Impossible d\'annuler cette réservation.');
+                redirect('admin/gestion_reservation');
+            }
+        
+            if ($this->Admin_Model->update_reservation($rent_number, ['status' => 'Annulée'])) {
+                $this->session->set_flashdata('success', 'Réservation annulée avec succès.');
+            } else {
+                $this->session->set_flashdata('error', 'Erreur lors de l\'annulation.');
+            }
+        
+            redirect('admin/gestion_reservation');
         }        
     }
     ?>
