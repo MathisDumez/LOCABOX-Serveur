@@ -19,6 +19,20 @@ class User_Controller extends CI_Controller {
         }
     }
 
+    private function check_admin() {
+        if (!$this->session->userdata('admin')) {
+            $this->session->set_flashdata('error', 'Accès réservé aux administrateurs.');
+            redirect('vitrine/index');
+        }
+    }
+
+    public function dashboard_admin() {
+        $this->check_admin();
+        //$data['users'] = $this->Admin_Model->get_all_users();
+        //$data['boxes'] = $this->Admin_Model->get_all_boxes();
+        $this->load->view('dashboard_admin');//, $data);
+    }
+
     public function reserver() {
         $this->check_auth();
     

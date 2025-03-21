@@ -262,6 +262,17 @@ th {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+.action-buttons {
+    display: flex;
+    flex-direction: line;
+    gap: 10px; /* Espacement entre les boutons */
+}
+
+.action-buttons .btn {
+    width: 100%; /* Prend toute la largeur de la cellule */
+    text-align: center;
+}
+
 /* Responsive */
 @media screen and (max-width: 768px) {
     .container {

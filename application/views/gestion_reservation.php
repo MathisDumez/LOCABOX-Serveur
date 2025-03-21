@@ -78,11 +78,13 @@
                         <td><?= date('d/m/Y', strtotime($reservation->end_reservation_date)); ?></td>
                         <td><?= htmlspecialchars($reservation->status); ?></td>
                         <td>
-                            <a href="<?= site_url('admin/modifier_reservation/' . $reservation->rent_number); ?>" class="btn btn-edit">Modifier</a>
-                            <?php if ($reservation->status == 'En Attente') : ?>
-                                <a href="<?= site_url('admin/valider_reservation/' . $reservation->rent_number); ?>" class="btn btn-success">Valider</a>
-                                <a href="<?= site_url('admin/annuler_reservation/' . $reservation->rent_number); ?>" class="btn btn-cancel">Annuler</a>
-                            <?php endif; ?>
+                            <div class="action-buttons">
+                                <a href="<?= site_url('admin/modifier_reservation/' . $reservation->rent_number); ?>" class="btn btn-edit">Modifier</a>
+                                <?php if ($reservation->status == 'En Attente') : ?>
+                                    <a href="<?= site_url('admin/valider_reservation/' . $reservation->rent_number); ?>" class="btn btn-success">Valider</a>
+                                    <a href="<?= site_url('admin/annuler_reservation/' . $reservation->rent_number); ?>" class="btn btn-cancel">Annuler</a>
+                                <?php endif; ?>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

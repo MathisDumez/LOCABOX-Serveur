@@ -66,26 +66,27 @@ $route['id/logout'] = 'Identification_Controller/logout';
 
 #User_Controller
 $route['user/dashboard'] = 'User_Controller/dashboard_user';
+$route['admin/dashboard'] = 'User_Controller/dashboard_admin';
 $route['user/change_password'] = 'User_Controller/changement_mdp';
 $route['user/update_password'] = 'User_Controller/update_password';
 $route['user/reserver'] = 'User_Controller/reserver';
 $route['user/valider_reservation'] = 'User_Controller/valider_reservation';
 $route['user/annuler_reservation/(:num)'] = 'User_Controller/annuler_reservation/$1';
 
-#Admin_Controller
-$route['admin/dashboard'] = 'Admin_Controller/dashboard';
+#Box_Controller
+$route['admin/etat_box'] = 'Box_Controller/etat_box';
+$route['admin/ajouter_box'] = 'Box_Controller/ajouter_box';
+$route['admin/acces_box/(:num)'] = 'Box_Controller/acces_box/$1';
+$route['admin/alarme_box/(:num)'] = 'Box_Controller/alarme_box/$1';
 
-$route['admin/etat_box'] = 'Admin_Controller/etat_box';
-$route['admin/ajouter_box'] = 'Admin_Controller/ajouter_box';
-$route['admin/acces_box/(:num)'] = 'Admin_Controller/acces_box/$1';
-$route['admin/alarme_box/(:num)'] = 'Admin_Controller/alarme_box/$1';
+#Reservation_Controller
+$route['admin/gestion_reservation'] = 'Reservation_Controller/gestion_reservation';
+$route['admin/modifier_reservation/(:num)'] = 'Reservation_Controller/modifier_reservation/$1';
+$route['admin/valider_reservation/(:num)'] = 'Reservation_Controller/valider_reservation/$1';
+$route['admin/annuler_reservation/(:num)'] = 'Reservation_Controller/annuler_reservation/$1';
 
-$route['admin/gestion_reservation'] = 'Admin_Controller/gestion_reservation';
-$route['admin/modifier_reservation/(:num)'] = 'Admin_Controller/modifier_reservation/$1';
-$route['admin/valider_reservation/(:num)'] = 'Admin_Controller/valider_reservation/$1';
-$route['admin/annuler_reservation/(:num)'] = 'Admin_Controller/annuler_reservation/$1';
-
-$route['admin/gestion_client'] = 'Admin_Controller/gestion_client';
+#Client_Controller
+$route['admin/gestion_client'] = 'Client_Controller/gestion_client';
 
 #Code_Controller
 $route['admin/gestion_code'] = 'Code_Controller/gestion_code';
