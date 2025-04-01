@@ -39,7 +39,7 @@
         </select>
 
         <button type="submit" class="btn">Filtrer</button>
-        <a href="<?= site_url('user/dashboard'); ?>" class="btn btn-reset">Réinitialiser</a>
+        <a href="<?= site_url('user/dashboard'); ?>" class="btn">Réinitialiser</a>
     </form>
 
     <table>
@@ -66,7 +66,7 @@
                         <td><?= htmlspecialchars($reservation->status); ?></td>
                         <td>
                             <?php if ($reservation->status != 'Annulée') : ?>
-                                <a href="<?= site_url('user/annuler_reservation/' . $reservation->rent_number); ?>" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment annuler cette réservation ?');">
+                                <a href="<?= site_url('user/annuler_reservation/' . $reservation->rent_number); ?>" class="btn" onclick="return confirm('Voulez-vous vraiment annuler cette réservation ?');">
                                     Annuler
                                 </a>
                             <?php else : ?>

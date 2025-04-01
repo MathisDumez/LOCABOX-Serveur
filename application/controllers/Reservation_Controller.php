@@ -17,6 +17,9 @@ class Reservation_Controller extends CI_Controller {
     public function gestion_reservation() {
         $this->check_admin();
     
+        // Mettre à jour les statuts des réservations
+        $this->Reservation_Model->update_reservation_status();
+    
         // Récupération des filtres via GET
         $filters = [
             'email' => $this->input->get('email'),
@@ -35,7 +38,7 @@ class Reservation_Controller extends CI_Controller {
         $data['status'] = $this->db->select('DISTINCT(status)')->get('rent')->result();
     
         $this->load->view('gestion_reservation', $data);
-    }
+    }    
     
     public function modifier_reservation($rent_number) {
         $this->check_admin();

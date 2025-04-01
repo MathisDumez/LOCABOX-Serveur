@@ -44,6 +44,14 @@ class Box_Controller extends CI_Controller {
         $this->check_admin(); // Vérifie que l'utilisateur est admin
         $data['alarms'] = $this->Box_Model->get_alarm_logs_by_box($id_box);
         $this->load->view('alarme_box', $data);
+    }
+
+    public function afficher_ajouter_box() {
+        $this->check_admin();
+        
+        $data['warehouses'] = $this->Box_Model->get_all_warehouses();
+        
+        $this->load->view('ajouter_box', $data);
     }    
 
     public function ajouter_box() {

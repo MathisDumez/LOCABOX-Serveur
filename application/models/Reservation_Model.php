@@ -72,6 +72,28 @@ class Reservation_Model extends Main_Model {
 
     public function valider_reservation($rent_number) {
         return $this->update('rent', $rent_number, ['status' => 'Validée'], 'rent_number');
+    }
+    
+    public function update_reservation_status() {
+        // Récupérer toutes les réservations avec le statut "Validée"
+        $this->db->where('status', 'Validée');
+        $this->db->where('start_reservation_date <=', date('Y-m-d H:i:s'));
+        $valid_reservations = $this->db->get('rent')->result();
+    
+        foreach ($valid_reservations as $reservation) {
+            // Si la réservation est en statut "Validée" et que la date de début est passée, la passer en statut "En Cours"
+            $this->update_reservation($reservation->rent_number, ['status' => 'En Cours']);
+        }
+    
+        // Récupérer toutes les réservations avec le statut "En Cours"
+        $this->db->where('status', 'En Cours');
+        $this->db->where('end_reservation_date <', date('Y-m-d H:i:s'));
+        $ongoing_reservations = $this->db->get('rent')->result();
+    
+        foreach ($ongoing_reservations as $reservation) {
+            // Si la réservation est en statut "En Cours" et que la date de fin est passée, la passer en statut "Terminée"
+            $this->update_reservation($reservation->rent_number, ['status' => 'Terminée']);
+        }
     }    
 }
 ?>

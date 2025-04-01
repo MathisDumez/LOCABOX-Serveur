@@ -5,7 +5,7 @@
 
     <?php include('includes/message.php'); ?>
 
-    <a href="<?= site_url('admin/etat_box'); ?>" class="btn btn-secondary">Retour à l'état des boxs</a>
+    <a href="<?= site_url('admin/etat_box'); ?>" class="btn">Retour à l'état des boxs</a>
 
     <table>
         <thead>

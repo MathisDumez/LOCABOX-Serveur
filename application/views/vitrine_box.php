@@ -32,7 +32,7 @@
         </select>
 
         <button type="submit" class="btn">Filtrer</button>
-        <a href="<?= site_url('vitrine/index'); ?>" class="btn btn-reset">Réinitialiser</a>
+        <a href="<?= site_url('vitrine/index'); ?>" class="btn">Réinitialiser</a>
     </form>
 
     <?php if (!empty($boxes)) : ?>

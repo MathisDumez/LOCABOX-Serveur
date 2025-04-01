@@ -5,7 +5,7 @@
 
     <?php include('includes/message.php'); ?>
 
-    <a href="<?= site_url('admin/gestion_reservation'); ?>" class="btn btn-secondary">Retour aux réservations</a>
+    <a href="<?= site_url('admin/gestion_reservation'); ?>" class="btn">Retour aux réservations</a>
 
     <form method="POST" action="<?= site_url('admin/modifier_reservation/' . $reservation->rent_number); ?>">
         <label for="start_reservation_date">Date de début :</label>
@@ -23,7 +23,7 @@
         </select>
 
         <button type="submit" class="btn btn-primary">Modifier</button>
-        <a href="<?= site_url('admin/gestion_reservation'); ?>" class="btn btn-secondary">Annuler</a>
+        <a href="<?= site_url('admin/gestion_reservation'); ?>" class="btn">Annuler</a>
     </form>
 </div>
 

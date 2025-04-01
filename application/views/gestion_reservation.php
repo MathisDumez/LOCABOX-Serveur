@@ -5,7 +5,8 @@
 
     <?php include('includes/message.php'); ?>
 
-    <a href="<?= site_url('admin/dashboard'); ?>" class="btn btn-secondary">Retour au tableau de bord</a>
+    <a href="<?= site_url('admin/dashboard'); ?>" class="btn">Retour au tableau de bord</a>
+    <a href="<?= site_url('admin/gestion_reservation'); ?>" class="btn">Mettre à jour les statuts</a>
 
     <form method="GET" action="<?= site_url('admin/gestion_reservation'); ?>">
         <label for="email">Email :</label>
@@ -50,7 +51,7 @@
         </select>
 
         <button type="submit" class="btn">Filtrer</button>
-        <a href="<?= site_url('admin/gestion_reservation'); ?>" class="btn btn-reset">Réinitialiser</a>
+        <a href="<?= site_url('admin/gestion_reservation'); ?>" class="btn">Réinitialiser</a>
     </form>
 
     <table>
@@ -79,7 +80,7 @@
                         <td><?= htmlspecialchars($reservation->status); ?></td>
                         <td>
                             <div class="action-buttons">
-                                <a href="<?= site_url('admin/modifier_reservation/' . $reservation->rent_number); ?>" class="btn btn-edit">Modifier</a>
+                                <a href="<?= site_url('admin/modifier_reservation/' . $reservation->rent_number); ?>" class="btn">Modifier</a>
                                 <?php if ($reservation->status == 'En Attente') : ?>
                                     <a href="<?= site_url('admin/valider_reservation/' . $reservation->rent_number); ?>" class="btn btn-success">Valider</a>
                                     <a href="<?= site_url('admin/annuler_reservation/' . $reservation->rent_number); ?>" class="btn btn-cancel">Annuler</a>
