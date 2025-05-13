@@ -17,7 +17,11 @@ class Client_Model extends Main_Model {
 
     // Supprimer un utilisateur
     public function delete_user($id_user_box) {
-        return $this->delete('user_box', $id_user_box);
+        return $this->delete('user_box', $id_user_box, 'id_user_box');
+    }
+
+    public function has_rents($id_user_box) {
+        return $this->count('rent', ['id_user_box' => $id_user_box]) > 0;
     }    
 }
 ?>

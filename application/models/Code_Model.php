@@ -19,5 +19,22 @@ class Code_Model extends Main_Model {
     public function get_code_history($id_box) {
         return $this->get_where('code_log', ['id_box' => (int) $id_box]);
     }
+
+    /*** 
+    SELECT box.num, box.current_code, warehouse.name 
+    FROM box 
+    INNER JOIN warehouse 
+    ON box.id_warehouse = warehouse.id_warehouse
+    ***/
+    public function get_code_and_warehouse(){
+        $this->db->select('box.num, box.current_code, warehouse.name as warehouse_name');
+        $this->db->from('box');
+        $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse');
+        $this->db->order_by('warehouse.name', 'ASC');
+        $this->db->order_by('box.num', 'ASC');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 }
 ?>

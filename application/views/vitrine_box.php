@@ -24,13 +24,6 @@
             <?php endforeach; ?>
         </select>
 
-        <label for="available">Disponibilité :</label>
-        <select name="available" id="available">
-            <option value="">Toutes</option>
-            <option value="1" <?= isset($_GET['available']) && $_GET['available'] == '1' ? 'selected' : ''; ?>>Disponible</option>
-            <option value="0" <?= isset($_GET['available']) && $_GET['available'] == '0' ? 'selected' : ''; ?>>Indisponible</option>
-        </select>
-
         <button type="submit" class="btn">Filtrer</button>
         <a href="<?= site_url('vitrine/index'); ?>" class="btn">Réinitialiser</a>
     </form>
@@ -42,7 +35,6 @@
                     <th>Bâtiment</th>
                     <th>Numéro</th>
                     <th>Taille</th>
-                    <th>Disponibilité</th>
                     <th>Réservation</th>
                 </tr>
             </thead>
@@ -52,7 +44,6 @@
                         <td><?= htmlspecialchars($box->warehouse_name ?? 'Indisponible'); ?></td>
                         <td><?= htmlspecialchars($box->num); ?></td>
                         <td><?= htmlspecialchars($box->size); ?> m²</td>
-                        <td><?= $box->available ? 'Disponible' : 'Indisponible'; ?></td>
                         <td>
                             <a href="<?= site_url('vitrine/detail/' . $box->id_box); ?>" class="btn">Réserver</a>
                         </td>

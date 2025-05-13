@@ -5,26 +5,36 @@
 
     <?php include('includes/message.php'); ?>
 
+    <a href="<?= site_url('admin/dashboard'); ?>" class="btn">Retour au tableau de bord</a>
+    <a href="<?= site_url('admin/ajouter_client'); ?>" class="btn">Ajouter un Client</a>
+
     <table>
         <thead>
             <tr>
                 <th>Email</th>
-                <th>Date et Heure</th>
-                <th>Adresse IP</th>
+                <th>Statut</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <?php if (!empty($logins)) : ?>
-                <?php foreach ($logins as $login) : ?>
+            <?php if (!empty($user_box)) : ?>
+                <?php foreach ($user_box as $user) : ?>
                     <tr>
-                        <td><?= htmlspecialchars($login->user_email); ?></td>
-                        <td><?= date('d/m/Y H:i', strtotime($login->login_time)); ?></td>
-                        <td><?= htmlspecialchars($login->ip_address); ?></td>
+                        <td><?= htmlspecialchars($user->email); ?></td>
+                        <td><?= $user->admin ? 'Administrateur' : 'Client'; ?></td>
+                        <td>
+                            <a href="<?= site_url('admin/modifier_client/' . $user->id_user_box); ?>" class="btn">Modifier</a>
+                            <a href="#" class="btn btn-cancel" onclick="simpleConfirm('Confirmer la suppression ?', function(confirmé) {
+                                if (confirmé) {
+                                    window.location.href = '<?= site_url('admin/supprimer_client/' . $user->id_user_box); ?>';
+                                }
+                            }); return false;">Supprimer</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="3">Aucune connexion enregistrée.</td>
+                    <td colspan="2">Aucun client trouvé.</td>
                 </tr>
             <?php endif; ?>
         </tbody>

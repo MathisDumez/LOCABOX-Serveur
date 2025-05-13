@@ -1,3 +1,5 @@
+<script src="<?= base_url('assets/js/popup.js') ?>"></script>
+
 <footer>
     <div class="footer-content">
         <p>&copy; 2025 LOCABOX. Tous droits réservés.</p>
@@ -24,6 +26,16 @@
             <a href="#"><img src="<?php echo base_url('assets/icons/twitter.svg'); ?>" alt="Twitter"></a>
             <a href="#"><img src="<?php echo base_url('assets/icons/instagram.png'); ?>" alt="Instagram"></a>
         </div>
+    </div>
+
+    <!-- Popup HTML -->
+    <div id="simple-confirm" >
+        <div style="background:#fff; padding:20px; border-radius:10px; text-align:center; min-width:300px;">
+            <p id="confirm-message">Es-tu sûr ?</p>
+            <button id="btn-yes">Oui</button>
+            <button id="btn-no">Non</button>
+        </div>
+        
     </div>
 </footer>
 

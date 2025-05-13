@@ -5,9 +5,9 @@
 
     <?php include('includes/message.php'); ?>
 
-    <a href="<?= site_url('admin/etat_box'); ?>" class="btn">Retour</a>
+    <a href="<?= site_url('admin/gestion_box'); ?>" class="btn">Retour</a>
 
-    <form method="POST" action="<?= site_url('admin/ajouter_box'); ?>">
+    <form method="POST" action="<?= site_url('admin/ajouter_box_submit'); ?>">
         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
         <label for="num">Numéro du Box :</label>

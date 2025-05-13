@@ -74,10 +74,23 @@ $route['user/valider_reservation'] = 'User_Controller/valider_reservation';
 $route['user/annuler_reservation/(:num)'] = 'User_Controller/annuler_reservation/$1';
 
 #Box_Controller
-$route['admin/etat_box'] = 'Box_Controller/etat_box';
+$route['admin/gestion_box'] = 'Box_Controller/gestion_box';
 $route['admin/ajouter_box'] = 'Box_Controller/afficher_ajouter_box';
+$route['admin/ajouter_box_submit'] = 'Box_Controller/ajouter_box';
+$route['admin/detail_box/(:num)'] = 'Box_Controller/detail_box/$1';
 $route['admin/acces_box/(:num)'] = 'Box_Controller/acces_box/$1';
 $route['admin/alarme_box/(:num)'] = 'Box_Controller/alarme_box/$1';
+$route['admin/modifier_box/(:num)'] = 'Box_Controller/modifier_box/$1';
+$route['admin/modifier_box_submit/(:num)'] = 'Box_Controller/modifier_box_submit/$1';
+$route['admin/supprimer_box/(:num)'] = 'Box_Controller/supprimer_box/$1';
+
+#Batiment_Controller
+$route['admin/gestion_batiment'] = 'Batiment_Controller/gestion_batiment';
+$route['admin/ajouter_batiment'] = 'Batiment_Controller/afficher_ajouter_batiment';
+$route['admin/ajouter_batiment_submit'] = 'Batiment_Controller/ajouter_batiment';
+$route['admin/modifier_batiment/(:num)'] = 'Batiment_Controller/afficher_modifier_batiment/$1';
+$route['admin/modifier_batiment_submit/(:num)'] = 'Batiment_Controller/modifier_batiment/$1';
+$route['admin/supprimer_batiment/(:num)'] = 'Batiment_Controller/supprimer_batiment/$1';
 
 #Reservation_Controller
 $route['admin/gestion_reservation'] = 'Reservation_Controller/gestion_reservation';
@@ -87,6 +100,11 @@ $route['admin/annuler_reservation/(:num)'] = 'Reservation_Controller/annuler_res
 
 #Client_Controller
 $route['admin/gestion_client'] = 'Client_Controller/gestion_client';
+$route['admin/ajouter_client'] = 'Client_Controller/form_add_client';
+$route['admin/insert_client'] = 'Client_Controller/insert_client';
+$route['admin/modifier_client/(:num)'] = 'Client_Controller/form_update_client/$1';
+$route['admin/update_client/(:num)'] = 'Client_Controller/update_user/$1';
+$route['admin/supprimer_client/(:num)'] = 'Client_Controller/delete_user/$1';
 
 #Code_Controller
 $route['admin/gestion_code'] = 'Code_Controller/gestion_code';

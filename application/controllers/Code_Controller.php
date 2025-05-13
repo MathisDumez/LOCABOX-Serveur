@@ -16,7 +16,7 @@ class Code_Controller extends CI_Controller {
 
     public function gestion_code() {
         $this->check_admin();
-        $data['boxes'] = $this->Code_Model->get_all('box');
+        $data['boxes'] = $this->Code_Model->get_code_and_warehouse();
         $this->load->view('gestion_code', $data);
     }
 

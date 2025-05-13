@@ -8,6 +8,7 @@
     <table>
         <thead>
             <tr>
+                <th>Batiment</th>
                 <th>Box</th>
                 <th>Code Actuel</th>
                 <th>Action</th>
@@ -17,10 +18,11 @@
             <?php if (!empty($boxes)) : ?>
                 <?php foreach ($boxes as $box) : ?>
                     <tr>
+                        <td><?= htmlspecialchars($box->warehouse_name); ?></td>
                         <td>Box <?= htmlspecialchars($box->num); ?></td>
-                        <td><?= htmlspecialchars($box->generated_code ?? 'Aucun'); ?></td>
+                        <td><?= htmlspecialchars($box->current_code ?? 'Aucun'); ?></td>
                         <td>
-                            <a href="<?= site_url('Code_Controller/generate_code/' . htmlspecialchars($box->id_box)); ?>" class="btn">Générer un Nouveau Code</a>
+                            <a href="<?= site_url('Code_Controller/generate_code/' . htmlspecialchars($box->num)); ?>" class="btn">Générer un Nouveau Code</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

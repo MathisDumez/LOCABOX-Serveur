@@ -1,0 +1,30 @@
+Todo list :
+Vitrine_Box -> Fait
+
+Identification :
+    - Possibilité de faire un changement de mdp quand oublier
+
+Gestion Box :
+    - Detail Box -> Fait
+    - Modifier box -> Fait
+    - Suppr box (msg d'alerte, confirmation avant action) -> Fait
+    - Etat Box
+
+Gestion Batiment : -> Fait
+
+Gestion Reservation :
+    - Detail Box
+    - Ajouter une page pour les modifs de reservation
+    - Rajout d'un msg d'alerte avant d'annuler une reservation
+
+Gestion Client : -> Fait
+
+Gestion Code :
+    - Generer Code
+    - Suppr
+
+Facultatif :
+Ajouter a l'inscription des nv champs (Nom Prénom et num)
+CSS a modif
+Ajout JS ?
+Optimisation du code -> Priorité Model et Controller

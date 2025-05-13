@@ -7,8 +7,8 @@
 
     <a href="<?= site_url('admin/dashboard'); ?>" class="btn">Retour au tableau de bord</a>
     <a href="<?= site_url('admin/ajouter_box'); ?>" class="btn">Ajouter un Box</a>
-
-    <form method="GET" action="<?= site_url('admin/etat_box'); ?>">
+    
+    <form method="GET" action="<?= site_url('admin/gestion_box'); ?>">
         <label for="size">Taille :</label>
         <select name="size" id="size">
             <option value="">Toutes</option>
@@ -35,7 +35,7 @@
         </select>
 
         <button type="submit" class="btn">Filtrer</button>
-        <a href="<?= site_url('admin/etat_box'); ?>" class="btn">Réinitialiser</a>
+        <a href="<?= site_url('admin/gestion_box'); ?>" class="btn">Réinitialiser</a>
     </form>
 
     <h2>État des Box</h2>
@@ -49,8 +49,7 @@
                     <th>Taille</th>
                     <th>Disponibilité</th>
                     <th>État</th>
-                    <th>Accès</th>
-                    <th>Alarmes</th>
+                    <th>Détails</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,12 +60,11 @@
                         <td><?= htmlspecialchars($box->size); ?> m²</td>
                         <td><?= $box->available ? 'Disponible' : 'Occupée'; ?></td>
                         <td>
-                            <span style="color: <?= empty($box->state) || $box->state === 'Indisponible' ? 'red' : 'black'; ?>">
-                                <?= empty($box->state) || $box->state === 'Indisponible' ? 'Indisponible' : htmlspecialchars($box->state); ?>
+                            <span style="color: <?= empty($box->state) || $box->state === 'Non Connecté' ? 'red' : 'red'; ?>">
+                                <?= empty($box->state) || $box->state === 'Non Connecté' ? 'Non Connecté' : htmlspecialchars($box->state); ?>
                             </span>
                         </td>
-                        <td><a href="<?= site_url('admin/acces_box/' . $box->id_box); ?>" class="btn">Voir</a></td>
-                        <td><a href="<?= site_url('admin/alarme_box/' . $box->id_box); ?>" class="btn">Voir</a></td>
+                        <td><a href="<?= site_url('admin/detail_box/' . $box->id_box); ?>" class="btn">Voir</a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

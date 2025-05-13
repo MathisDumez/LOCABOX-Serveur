@@ -13,7 +13,7 @@ class Box_Model extends Main_Model {
     // Récupérer la liste des box
     public function get_all_boxes() {
         $this->db->select('box.*, warehouse.name as warehouse_name, 
-            IFNULL(box.state, "Indisponible") as state');
+            IFNULL(box.state, "Non Connectée") as state');
         $this->db->from('box');
         $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
         $this->db->order_by('warehouse.name', 'ASC');
@@ -27,8 +27,8 @@ class Box_Model extends Main_Model {
 
     // Modifier un box
     public function update_box($id_box, $data) {
-        return $this->update('box', $id_box, $data);
-    }
+        return $this->db->update('box', $data, ['id_box' => $id_box]);
+    }    
 
     public function get_access_logs_by_box($id_box) {
         $this->db->select('
@@ -75,5 +75,23 @@ class Box_Model extends Main_Model {
     public function ajouter_box($data) {
         return $this->insert('box', $data);
     }
+
+    public function get_box_details($id_box) {
+        $this->db->select('
+            box.*,
+            warehouse.name AS warehouse_name,
+            warehouse.address AS warehouse_address,
+            rent.start_reservation_date,
+            rent.end_reservation_date,
+            rent.status,
+            user_box.email
+        ');
+        $this->db->from('box');
+        $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
+        $this->db->join('rent', 'box.id_box = rent.id_box AND rent.status IN ("Validée", "En Cours")', 'left');
+        $this->db->join('user_box', 'rent.id_user_box = user_box.id_user_box', 'left');
+        $this->db->where('box.id_box', $id_box);
+        return $this->db->get()->row();
+    }    
 }
 ?>

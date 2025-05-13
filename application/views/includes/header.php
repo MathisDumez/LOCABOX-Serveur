@@ -11,6 +11,7 @@
 <header>
     <nav>
         <ul class="menu">
+            <li>LOCABOX</li>
             <li><a href="<?php echo site_url('vitrine/index'); ?>" 
                    class="<?php echo ($this->uri->segment(1) == 'Vitrine_Controller') ? 'active' : ''; ?>">
                    Accueil
