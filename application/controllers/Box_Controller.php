@@ -23,6 +23,23 @@ class Box_Controller extends CI_Controller {
         $this->load->view('gestion_box', $data); // Charge la vue gestion_box.php
     }
 
+    public function gestion_box_page($page = 1) {
+        $this->check_admin();
+
+        $limit = 10; // Nombre de box par page
+        $offset = ($page - 1) * $limit;
+
+        $data['boxes'] = $this->Box_Model->get_boxes_paginated($limit, $offset);
+        $data['warehouses'] = $this->Box_Model->get_all_warehouses();
+
+        // Nombre total de box pour pagination
+        $total_boxes = $this->Box_Model->count_all_boxes();
+        $data['total_pages'] = ceil($total_boxes / $limit);
+        $data['current_page'] = $page;
+
+        $this->load->view('gestion_box', $data);
+    }
+
     public function update_box($id_box) {
         $this->check_admin();
         $data = [

@@ -12,14 +12,21 @@ class Box_Model extends Main_Model {
 
     // Récupérer la liste des box
     public function get_all_boxes() {
-        $this->db->select('box.*, warehouse.name as warehouse_name, 
-            IFNULL(box.state, "Non Connectée") as state');
+        $this->db->select('
+            box.*, 
+            warehouse.name as warehouse_name, 
+            IF(
+                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 60,
+                "Connecté",
+                "Non Connecté"
+            ) as connection_status
+        ');
         $this->db->from('box');
         $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
         $this->db->order_by('warehouse.name', 'ASC');
         $this->db->order_by('box.num', 'ASC');
         return $this->db->get()->result();
-    }     
+    }
 
     public function get_all_warehouses() {
         return $this->get_all('warehouse');
@@ -84,7 +91,12 @@ class Box_Model extends Main_Model {
             rent.start_reservation_date,
             rent.end_reservation_date,
             rent.status,
-            user_box.email
+            user_box.email,
+            IF(
+                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 60,
+                "Connecté",
+                "Non Connecté"
+            ) as connection_status
         ');
         $this->db->from('box');
         $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
@@ -92,6 +104,29 @@ class Box_Model extends Main_Model {
         $this->db->join('user_box', 'rent.id_user_box = user_box.id_user_box', 'left');
         $this->db->where('box.id_box', $id_box);
         return $this->db->get()->row();
-    }    
+    }
+
+    public function get_boxes_paginated($limit, $offset) {
+        $this->db->select('
+            box.*, 
+            warehouse.name as warehouse_name, 
+            IF(
+                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 60,
+                "Connecté",
+                "Non Connecté"
+            ) as connection_status
+        ');
+        $this->db->from('box');
+        $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
+        $this->db->order_by('warehouse.name', 'ASC');
+        $this->db->order_by('box.num', 'ASC');
+        $this->db->limit($limit, $offset);
+        return $this->db->get()->result();
+    }
+
+    public function count_all_boxes() {
+        return $this->db->count_all('box');
+    }
+
 }
 ?>

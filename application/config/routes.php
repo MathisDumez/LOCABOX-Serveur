@@ -74,7 +74,8 @@ $route['user/valider_reservation'] = 'User_Controller/valider_reservation';
 $route['user/annuler_reservation/(:num)'] = 'User_Controller/annuler_reservation/$1';
 
 #Box_Controller
-$route['admin/gestion_box'] = 'Box_Controller/gestion_box';
+$route['admin/gestion_box/'] = 'Box_Controller/gestion_box/';
+$route['admin/gestion_box/(:num)'] = 'Box_Controller/gestion_box_page/$1';
 $route['admin/ajouter_box'] = 'Box_Controller/afficher_ajouter_box';
 $route['admin/ajouter_box_submit'] = 'Box_Controller/ajouter_box';
 $route['admin/detail_box/(:num)'] = 'Box_Controller/detail_box/$1';

@@ -48,7 +48,7 @@ message.php
 MLD de la BDD :
 user_box = (id_user_box INT AUTO_INCREMENT, email VARCHAR(50) , password VARCHAR(100) , admin BOOLEAN, level INT, fcm VARCHAR(200) );
 warehouse = (id_warehouse INT AUTO_INCREMENT, name VARCHAR(50) , address VARCHAR(50) );
-box = (id_box INT AUTO_INCREMENT, num INT, size INT, available BOOLEAN, current_code VARCHAR(6) , modem VARCHAR(100) , state TINYINT, #id_warehouse);
+box = (id_box INT AUTO_INCREMENT, num INT, size INT, available BOOLEAN, current_code VARCHAR(6) , modem VARCHAR(100) , state DATETIME, #id_warehouse);
 rent = (rent_number INT AUTO_INCREMENT, start_reservation_date DATETIME, end_reservation_date DATETIME, status VARCHAR(50) , #id_box, #id_user_box);
 access_log = (access_date DATETIME, locked BOOLEAN, notify TINYINT, #id_box);
 alarm_log = (alarm_date DATETIME, info VARCHAR(150) , notify TINYINT, #id_box);

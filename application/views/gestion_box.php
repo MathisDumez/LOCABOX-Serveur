@@ -60,9 +60,13 @@
                         <td><?= htmlspecialchars($box->size); ?> m²</td>
                         <td><?= $box->available ? 'Disponible' : 'Occupée'; ?></td>
                         <td>
-                            <span style="color: <?= empty($box->state) || $box->state === 'Non Connecté' ? 'red' : 'red'; ?>">
-                                <?= empty($box->state) || $box->state === 'Non Connecté' ? 'Non Connecté' : htmlspecialchars($box->state); ?>
-                            </span>
+                            <?php
+                                if ($box->connection_status === "Connecté") {
+                                    echo '<span style="color:green">Connecté</span>';
+                                } else {
+                                    echo '<span style="color:red">Non connecté</span>';
+                                }
+                            ?>
                         </td>
                         <td><a href="<?= site_url('admin/detail_box/' . $box->id_box); ?>" class="btn">Voir</a></td>
                     </tr>
@@ -72,6 +76,29 @@
     <?php else : ?>
         <p>Aucun box disponible.</p>
     <?php endif; ?>
+    
+    <div class="pagination">
+        <?php if ($total_pages > 1): ?>
+            <nav>
+                <ul class="pagination">
+                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                        <li class="page-item <?= ($i == $current_page) ? 'active' : '' ?>">
+                            <a class="page-link" href="<?= site_url('admin/gestion_box/' . $i) ?>">
+                                <?= $i ?>
+                            </a>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
+            </nav>
+        <?php endif; ?>
+    </div>
+
 </div>
+
+<script>
+    setInterval(function() {
+        location.reload();
+    }, 10000); // toutes les 10 secondes
+</script>
 
 <?php include('includes/footer.php'); ?>

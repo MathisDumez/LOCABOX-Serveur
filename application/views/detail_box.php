@@ -5,43 +5,58 @@
 
     <?php include('includes/message.php'); ?>
 
-    <a href="<?= site_url('admin/gestion_box') ?>" class="btn" style="margin-bottom: 10px;">Retour à la gestion des box</a><br>
+    <a href="<?= site_url('admin/gestion_box') ?>" class="btn" style="margin-bottom: 20px;">Retour à la gestion des box</a>
 
-    <p><strong>Bâtiment :</strong> <?= $box->warehouse_name ?></p>
-    <p><strong>Numéro :</strong> <?= $box->num ?></p>
-    <p><strong>Taille :</strong> <?= $box->size ?> m²</p>
-    <p><strong>État :</strong> <?= $box->available ? 'Disponible' : 'Occupé' ?></p><br>
+    <div style="text-align: left; margin-bottom: 30px;">
+        <p><strong>Bâtiment :</strong> <?= $box->warehouse_name ?></p>
+        <p><strong>Numéro :</strong> <?= $box->num ?></p>
+        <p><strong>Taille :</strong> <?= $box->size ?> m²</p>
+        <p><strong>Disponibilité :</strong> <?= $box->available ? 'Disponible' : 'Occupé' ?></p>
+    </div>
 
-    <a href="<?= site_url('admin/modifier_box/' . $box->id_box); ?>" class="btn" style="margin-bottom: 10px;">Modifier Box</a>
-    <a href="#" class="btn btn-cancel" onclick="simpleConfirm('Confirmer la suppression ?', function(confirmé) {
-        if (confirmé) {
-            window.location.href = '<?= site_url('admin/supprimer_box/' . $box->id_box); ?>';
-        }
-    }); return false;">Supprimer</a>
+    <div style="text-align: left; margin-bottom: 30px;">
+        <h4>État de connexion</h4>
+        <p><strong>Dernière activité :</strong> <?= date('d/m/Y H:i:s', strtotime($box->state)) ?></p>
+        <p>
+            <strong>Statut :</strong>
+            <?php if ($box->connection_status == 'Connecté'): ?>
+                <span class="status-indicator connected"></span>
+                <span style="color: #28a745; font-weight: bold;"><?= $box->connection_status ?></span>
+            <?php else: ?>
+                <span class="status-indicator disconnected"></span>
+                <span style="color: #dc3545; font-weight: bold;"><?= $box->connection_status ?></span>
+            <?php endif; ?>
+        </p>
+    </div>
 
-    <table>
-        <thead>
-            <th>Historique</th>
-        </thead>
-        <tbody>
-            <td>
-                <a href="<?= site_url('admin/acces_box/' . $box->id_box); ?>" class="btn">Accès</a>
-                <a href="<?= site_url('admin/alarme_box/' . $box->id_box); ?>" class="btn">Alarmes</a>
-            </td>
-        </tbody>
-    </table>
-    
+    <div class="action-buttons" style="margin-bottom: 20px;">
+        <a href="<?= site_url('admin/modifier_box/' . $box->id_box); ?>" class="btn">Modifier Box</a>
+        <a href="#" class="btn btn-cancel" onclick="simpleConfirm('Confirmer la suppression ?', function(confirmé) {
+            if (confirmé) {
+                window.location.href = '<?= site_url('admin/supprimer_box/' . $box->id_box); ?>';
+            }
+        }); return false;">Supprimer</a>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h3>Historique</h3>
+        <div class="action-buttons">
+            <a href="<?= site_url('admin/acces_box/' . $box->id_box); ?>" class="btn">Accès</a>
+            <a href="<?= site_url('admin/alarme_box/' . $box->id_box); ?>" class="btn">Alarmes</a>
+        </div>
+    </div>
+
     <h2>Réservation</h2>
-
-    <?php if ($box->email): ?>
-        <p><strong>Client :</strong> <?= $box->email ?></p>
-        <p><strong>Du :</strong> <?= date('d/m/Y H:i', strtotime($box->start_reservation_date)) ?></p>
-        <p><strong>Au :</strong> <?= date('d/m/Y H:i', strtotime($box->end_reservation_date)) ?></p>
-        <p><strong>Statut :</strong> <?= $box->status ?></p>
-    <?php else: ?>
-        <p>Aucune réservation en cours pour ce box.</p>
-    <?php endif; ?>
-
+    <div style="text-align: left;">
+        <?php if ($box->email): ?>
+            <p><strong>Client :</strong> <?= $box->email ?></p>
+            <p><strong>Du :</strong> <?= date('d/m/Y H:i', strtotime($box->start_reservation_date)) ?></p>
+            <p><strong>Au :</strong> <?= date('d/m/Y H:i', strtotime($box->end_reservation_date)) ?></p>
+            <p><strong>Statut :</strong> <?= $box->status ?></p>
+        <?php else: ?>
+            <p>Aucune réservation en cours pour ce box.</p>
+        <?php endif; ?>
+    </div>
 </div>
 
 <?php include('includes/footer.php'); ?>

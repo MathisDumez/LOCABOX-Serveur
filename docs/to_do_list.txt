@@ -1,30 +1,42 @@
 Todo list :
-Vitrine_Box -> Fait
 
-Identification :
-    - Possibilité de faire un changement de mdp quand oublier
-
-Gestion Box :
-    - Detail Box -> Fait
-    - Modifier box -> Fait
-    - Suppr box (msg d'alerte, confirmation avant action) -> Fait
-    - Etat Box
-
-Gestion Batiment : -> Fait
+Gestion Box : -> Fait
 
 Gestion Reservation :
     - Detail Box
     - Ajouter une page pour les modifs de reservation
     - Rajout d'un msg d'alerte avant d'annuler une reservation
-
-Gestion Client : -> Fait
+    - Automatiser l'annulation des reservations au date dépasser
+    - Modifier le systeme de try
+    - Systeme de page
 
 Gestion Code :
     - Generer Code
     - Suppr
+    - Systeme de page
+
+Vitrine_Box/Reservation :
+    - Modifier confirmation reservation pour inclure l'heure
+    - Systeme de page
+
+User :
+    - Mes Reservation, ajout popup conf + modif bouton quand status terminé
+    - Systeme de page
+    - dashboard_user ?
+    - Modifier info_user ?
+
+Gestion Client : 
+    - Systeme de page
+    - Ajouter/modifier Nom Prénom et num
+
+Gestion Batiment :
+    - Systeme de page
+
+Identification :
+    - Ajouter a l'inscription des nv champs (Nom Prénom et num)
+    - Possibilité de faire un changement de mdp quand oublier
 
 Facultatif :
-Ajouter a l'inscription des nv champs (Nom Prénom et num)
 CSS a modif
 Ajout JS ?
 Optimisation du code -> Priorité Model et Controller
