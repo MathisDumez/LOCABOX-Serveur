@@ -14,11 +14,11 @@
             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
             <input type="hidden" name="box_id" value="<?= htmlspecialchars($reservation['box_id']); ?>">
 
-            <label for="start_date">Date de début :</label>
-            <input type="date" id="start_date" name="start_date" required min="<?= date('Y-m-d'); ?>">
+            <label for="start_date">Date et heure de début :</label>
+            <input type="datetime-local" id="start_date" name="start_date" required min="<?= date('Y-m-d\TH:i'); ?>">
 
-            <label for="end_date">Date de fin :</label>
-            <input type="date" id="end_date" name="end_date" required min="<?= date('Y-m-d', strtotime('+1 day')); ?>">
+            <label for="end_date">Date et heure de fin :</label>
+            <input type="datetime-local" id="end_date" name="end_date" required min="<?= date('Y-m-d\TH:i', strtotime('+1 hour')); ?>">
 
             <button type="submit" class="btn">Confirmer la réservation</button>
             <a href="javascript:history.back();" class="btn btn-cancel">Annuler</a>

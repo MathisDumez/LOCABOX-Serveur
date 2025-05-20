@@ -14,11 +14,20 @@ class Batiment_Controller extends CI_Controller {
         }
     }
 
-    public function gestion_batiment() {
-        $this->check_admin(); // Vérifie si l'utilisateur est admin
+    public function gestion_batiment($page = 1) {
+        $this->check_admin();
 
-        $data['warehouses'] = $this->Batiment_Model->get_all_warehouses(); // Récupère la liste des bâtiments
+        $per_page = 10;
+        $offset = ($page - 1) * $per_page;
+
+        $this->load->helper('pagination_helper');
+        $total = $this->Batiment_Model->count('warehouse');
         
+        init_pagination(site_url('admin/gestion_batiment'), $total, $per_page, 3);
+
+        $data['warehouses'] = $this->Batiment_Model->get_paginated_warehouse($per_page, $offset);
+        $data['pagination_links'] = $this->pagination->create_links();
+
         $this->load->view('gestion_batiment', $data);
     }
 

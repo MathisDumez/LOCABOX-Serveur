@@ -37,6 +37,9 @@
     <?php else : ?>
         <p>Aucun bâtiment enregistré pour l'instant.</p>
     <?php endif; ?>
+
+    <?= $pagination_links ?? ''; ?>
+    
 </div>
 
 <?php include('includes/footer.php'); ?>

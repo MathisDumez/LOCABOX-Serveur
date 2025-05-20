@@ -5,6 +5,10 @@
     
     <?php include('includes/message.php'); ?>
 
+    <div class="change-password">
+        <a href="<?= site_url('user/change_password'); ?>" class="btn">Changer de mot de passe</a>
+    </div>
+
     <form method="GET" action="<?= site_url('user/dashboard'); ?>">
         <label for="size">Taille :</label>
         <select name="size" id="size">
@@ -61,16 +65,18 @@
                         <td><?= htmlspecialchars($reservation->warehouse_name); ?></td>
                         <td>Box <?= htmlspecialchars($reservation->box_num); ?></td>
                         <td><?= htmlspecialchars($reservation->box_size); ?> m²</td>
-                        <td><?= date('d/m/Y', strtotime($reservation->start_reservation_date)); ?></td>
-                        <td><?= date('d/m/Y', strtotime($reservation->end_reservation_date)); ?></td>
+                        <td><?= date('d/m/Y H:i', strtotime($reservation->start_reservation_date)); ?></td>
+                        <td><?= date('d/m/Y H:i', strtotime($reservation->end_reservation_date)); ?></td>
                         <td><?= htmlspecialchars($reservation->status); ?></td>
                         <td>
-                            <?php if ($reservation->status != 'Annulée') : ?>
-                                <a href="<?= site_url('user/annuler_reservation/' . $reservation->rent_number); ?>" class="btn" onclick="return confirm('Voulez-vous vraiment annuler cette réservation ?');">
-                                    Annuler
-                                </a>
+                            <?php if ($reservation->status != 'Annulée' && $reservation->status != 'Terminée') : ?>
+                                <a href="#" class="btn btn-cancel" onclick="simpleConfirm('Confirmer l\'annulation ?', function(confirmé) {
+                                    if (confirmé) {
+                                        window.location.href = '<?= site_url('user/annuler_reservation/' . $reservation->rent_number); ?>';
+                                    }
+                                }); return false;">Annulée</a>
                             <?php else : ?>
-                                <span class="text-muted">Annulée</span>
+                                <span class="text-muted">Action Impossible</span>
                             <?php endif; ?>
                         </td>
                     </tr>
@@ -83,9 +89,7 @@
         </tbody>
     </table>
 
-    <div class="change-password">
-        <a href="<?= site_url('user/change_password'); ?>" class="btn">Changer de mot de passe</a>
-    </div>
+    <?= $pagination_links ?? ''; ?>
 
 </div>
 

@@ -4,7 +4,6 @@ class Client_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Client_Model');
-        $this->load->library(['session', 'form_validation']);
     }
 
     private function check_admin() {
@@ -14,11 +13,43 @@ class Client_Controller extends CI_Controller {
         }
     }   
 
-    public function gestion_client() {
-        $this->check_admin(); // Vérifie si l'utilisateur est admin
-    
-        $data['user_box'] = $this->Client_Model->get_all_users(); // Récupère la liste des clients
-        
+    public function gestion_client($page = 1) {
+        $this->check_admin();
+
+        $per_page = 10;
+        $offset = ($page - 1) * $per_page;
+
+        // Récupération des filtres GET
+        $email_filter = $this->input->get('email');
+        $admin_filter = $this->input->get('admin');
+
+        $conditions = [];
+
+        if (!empty($email_filter)) {
+            $conditions['email'] = ['like', $email_filter]; // Supporte LIKE dans Main_Model
+        }
+
+        if ($admin_filter !== null && $admin_filter !== '') {
+            $conditions['admin'] = $admin_filter;
+        }
+
+        $query_params = [
+            'email' => $email_filter,
+            'admin' => $admin_filter
+        ];
+
+        $total_clients = $this->Client_Model->count_filtered('user_box', $conditions);
+
+        $clients = $this->Client_Model->get_paginated('user_box', $per_page, $offset, $conditions, [], ['id_user_box' => 'ASC']);
+
+        $this->load->helper('pagination_helper');
+        init_pagination(site_url('admin/gestion_client'), $total_clients, $per_page, 3, $query_params);
+
+        $data['user_box'] = $clients;
+        $data['pagination_links'] = $this->pagination->create_links();
+        $data['email_filter'] = $email_filter;
+        $data['admin_filter'] = $admin_filter;
+
         $this->load->view('gestion_client', $data);
     }
 

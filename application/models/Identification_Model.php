@@ -65,4 +65,5 @@ class Identification_Model extends Main_Model {
     public function check_email_exists(string $email): bool {
         return $this->db->get_where('user_box', ['email' => $email])->num_rows() > 0;
     }
+
 }

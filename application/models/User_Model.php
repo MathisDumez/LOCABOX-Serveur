@@ -86,5 +86,49 @@ class User_Model extends Main_Model {
         // Modifier le statut en "Annulée"
         return $this->db->update('rent', ['status' => 'Annulée']);
     }    
+    
+    // Compte le nombre total de réservations filtrées pour un utilisateur
+    public function count_filtered_reservations($id_user_box, $size = null, $warehouse = null, $status = null) {
+        $this->db->from('rent');
+        $this->db->join('box', 'box.id_box = rent.id_box');
+        $this->db->join('warehouse', 'warehouse.id_warehouse = box.id_warehouse');
+        $this->db->where('rent.id_user_box', $id_user_box);
+
+        if (!empty($size)) {
+            $this->db->where('box.size', $size);
+        }
+        if (!empty($warehouse)) {
+            $this->db->where('box.id_warehouse', $warehouse);
+        }
+        if (!empty($status)) {
+            $this->db->where('rent.status', $status);
+        }
+
+        return $this->db->count_all_results();
+    }
+
+    // Récupère les réservations paginées avec filtres
+    public function get_paginated_reservations($id_user_box, $limit, $offset = 0, $size = null, $warehouse = null, $status = null) {
+        $this->db->select('rent.rent_number, box.num AS box_num, box.size AS box_size, warehouse.name AS warehouse_name, rent.start_reservation_date, rent.end_reservation_date, rent.status');
+        $this->db->from('rent');
+        $this->db->join('box', 'box.id_box = rent.id_box');
+        $this->db->join('warehouse', 'warehouse.id_warehouse = box.id_warehouse');
+        $this->db->where('rent.id_user_box', $id_user_box);
+
+        if (!empty($size)) {
+            $this->db->where('box.size', $size);
+        }
+        if (!empty($warehouse)) {
+            $this->db->where('box.id_warehouse', $warehouse);
+        }
+        if (!empty($status)) {
+            $this->db->where('rent.status', $status);
+        }
+
+        $this->db->order_by('rent.start_reservation_date', 'DESC');
+        $this->db->limit($limit, $offset);
+
+        return $this->db->get()->result();
+    }
 }
 ?>

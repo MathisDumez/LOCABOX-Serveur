@@ -51,4 +51,67 @@ class Main_Model extends CI_Model {
         $this->db->where($conditions); // Applique les conditions seulement si elles sont fournies
         return $this->db->count_all_results($table);
     }
+
+    // Compter les entrées avec conditions optionnelles
+    public function count_filtered(string $table, array $conditions = [], array $joins = []) {
+        $this->db->from($table);
+
+        // Joins éventuels (ex : ['warehouse' => ['table' => 'warehouse', 'condition' => 'box.id_warehouse = warehouse.id_warehouse', 'type' => 'left']])
+        foreach ($joins as $alias => $join) {
+            $this->db->join($join['table'], $join['condition'], $join['type'] ?? 'inner');
+        }
+
+        if (!empty($conditions)) {
+            foreach ($conditions as $field => $value) {
+                if (is_array($value) && count($value) === 2 && in_array($value[0], ['<', '>', '<=', '>=', '!=', 'like'])) {
+                    // condition spéciale : opérateur et valeur
+                    $this->db->where("$field {$value[0]}", $value[1]);
+                } else {
+                    $this->db->where($field, $value);
+                }
+            }
+        }
+
+        return $this->db->count_all_results();
+    }
+
+    // Récupérer des entrées paginées avec conditions, joins et tri
+    public function get_paginated(string $table, int $limit, int $offset = 0, array $conditions = [], array $joins = [], array $order_by = []) {
+        $this->db->select("$table.*");
+        $this->db->from($table);
+
+        // Joins éventuels
+        foreach ($joins as $alias => $join) {
+            $this->db->join($join['table'], $join['condition'], $join['type'] ?? 'inner');
+            // Pour pouvoir sélectionner des colonnes des tables jointes :
+            if (!empty($join['select'])) {
+                foreach ($join['select'] as $col) {
+                    $this->db->select($col);
+                }
+            }
+        }
+
+        // Conditions
+        if (!empty($conditions)) {
+            foreach ($conditions as $field => $value) {
+                if (is_array($value) && count($value) === 2 && in_array($value[0], ['<', '>', '<=', '>=', '!=', 'like'])) {
+                    $this->db->where("$field {$value[0]}", $value[1]);
+                } else {
+                    $this->db->where($field, $value);
+                }
+            }
+        }
+
+        // Tri
+        if (!empty($order_by)) {
+            foreach ($order_by as $field => $dir) {
+                $this->db->order_by($field, $dir);
+            }
+        }
+
+        // Limite et offset
+        $this->db->limit($limit, $offset);
+
+        return $this->db->get()->result();
+    }
 }

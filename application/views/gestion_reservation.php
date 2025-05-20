@@ -18,14 +18,6 @@
         <label for="end_date">Date de fin :</label>
         <input type="date" name="end_date" id="end_date" value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : ''; ?>">
 
-        <label for="size">Taille :</label>
-        <select name="size" id="size">
-            <option value="">Toutes</option>
-            <?php foreach ([7, 40] as $s) : ?>
-                <option value="<?= $s; ?>" <?= isset($_GET['size']) && $_GET['size'] == $s ? 'selected' : ''; ?>><?= $s; ?> m²</option>
-            <?php endforeach; ?>
-        </select>
-
         <label for="warehouse">Bâtiment :</label>
         <select name="warehouse" id="warehouse">
             <option value="">Tous</option>
@@ -60,7 +52,6 @@
                 <th>Locataire</th>
                 <th>Batiment</th>
                 <th>Box</th>
-                <th>Taille</th>
                 <th>Début</th>
                 <th>Fin</th>
                 <th>Statut</th>
@@ -74,9 +65,8 @@
                         <td><?= htmlspecialchars($reservation->user_email); ?></td>
                         <td><?= htmlspecialchars($reservation->warehouse_name); ?></td>
                         <td>Box <?= htmlspecialchars($reservation->box_num); ?></td>
-                        <td><?= htmlspecialchars($reservation->box_size); ?> m²</td>
-                        <td><?= date('d/m/Y', strtotime($reservation->start_reservation_date)); ?></td>
-                        <td><?= date('d/m/Y', strtotime($reservation->end_reservation_date)); ?></td>
+                        <td><?= date('d/m/Y H:i', strtotime($reservation->start_reservation_date)); ?></td>
+                        <td><?= date('d/m/Y H:i', strtotime($reservation->end_reservation_date)); ?></td>
                         <td><?= htmlspecialchars($reservation->status); ?></td>
                         <td>
                             <div class="action-buttons">
@@ -91,7 +81,7 @@
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="8">Aucune réservation enregistrée.</td>
+                    <td colspan="7">Aucune réservation enregistrée.</td>
                 </tr>
             <?php endif; ?>
         </tbody>

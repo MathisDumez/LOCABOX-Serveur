@@ -8,6 +8,22 @@
     <a href="<?= site_url('admin/dashboard'); ?>" class="btn">Retour au tableau de bord</a>
     <a href="<?= site_url('admin/ajouter_client'); ?>" class="btn">Ajouter un Client</a>
 
+    <form method="GET" action="<?= site_url('admin/gestion_client'); ?>">
+        <label for="email">Email :</label>
+        <input type="text" name="email" id="email" value="<?= htmlspecialchars($email_filter ?? ''); ?>">
+
+        <label for="admin">Statut :</label>
+        <select name="admin" id="admin">
+            <option value="">Tous</option>
+            <option value="0" <?= (isset($admin_filter) && $admin_filter === '0') ? 'selected' : ''; ?>>Client</option>
+            <option value="1" <?= (isset($admin_filter) && $admin_filter === '1') ? 'selected' : ''; ?>>Administrateur</option>
+        </select>
+
+        <button type="submit" class="btn">Filtrer</button>
+        <a href="<?= site_url('admin/gestion_client'); ?>" class="btn">Réinitialiser</a>
+    </form>
+
+
     <table>
         <thead>
             <tr>
@@ -39,6 +55,9 @@
             <?php endif; ?>
         </tbody>
     </table>
+
+    <?= $pagination_links ?? ''; ?>
+
 </div>
 
 <?php include('includes/footer.php'); ?>

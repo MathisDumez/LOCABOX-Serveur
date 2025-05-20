@@ -26,6 +26,60 @@ class User_Controller extends CI_Controller {
         }
     }
 
+    public function dashboard_user($page = 1) {
+        $this->check_auth();
+
+        $per_page = 10;
+        $offset = ($page - 1) * $per_page;
+
+        // Récupération des filtres GET
+        $size = $this->input->get('size');
+        $warehouse = $this->input->get('warehouse');
+        $status = $this->input->get('status');
+
+        // Préparer les paramètres de requête pour le suffixe URL
+        $query_params = [
+            'size' => $size,
+            'warehouse' => $warehouse,
+            'status' => $status
+        ];
+
+        // Compter le total des réservations filtrées pour l'utilisateur
+        $total_reservations = $this->User_Model->count_filtered_reservations(
+            $this->session->userdata('id_user_box'),
+            $size,
+            $warehouse,
+            $status
+        );
+
+        // Récupérer les réservations paginées
+        $reservations = $this->User_Model->get_paginated_reservations(
+            $this->session->userdata('id_user_box'),
+            $per_page,
+            $offset,
+            $size,
+            $warehouse,
+            $status
+        );
+
+        // Charger les entrepôts et statuts pour les filtres
+        $data['warehouses'] = $this->User_Model->get_all('warehouse');
+        $data['status'] = $this->User_Model->get_distinct_status();
+
+        // Charger les réservations et filtres dans la vue
+        $data['reservations'] = $reservations;
+        $data['size_filter'] = $size;
+        $data['warehouse_filter'] = $warehouse;
+        $data['status_filter'] = $status;
+
+        // Pagination helper
+        $this->load->helper('pagination_helper');
+        init_pagination(site_url('user/dashboard'), $total_reservations, $per_page, 3, $query_params);
+        $data['pagination_links'] = $this->pagination->create_links();
+
+        $this->load->view('dashboard_user', $data);
+    }
+
     public function dashboard_admin() {
         $this->check_admin();
         //$data['users'] = $this->Admin_Model->get_all_users();
@@ -61,32 +115,36 @@ class User_Controller extends CI_Controller {
     
     public function valider_reservation() {
         $this->check_auth();
-    
+
         $box_id = $this->input->post('box_id');
         $start_date = $this->input->post('start_date');
         $end_date = $this->input->post('end_date');
-    
+
         if (!$box_id || !$start_date || !$end_date) {
             $this->session->set_flashdata('error', 'Informations de réservation incomplètes.');
             redirect('user/reserver');
         }
-    
+
+        // Conversion des dates/heure au format MySQL
+        $start_datetime = date('Y-m-d H:i:s', strtotime($start_date));
+        $end_datetime = date('Y-m-d H:i:s', strtotime($end_date));
+
         $data = [
             'id_user_box' => $this->session->userdata('id_user_box'),
             'id_box' => $box_id,
-            'start_reservation_date' => $start_date,
-            'end_reservation_date' => $end_date,
+            'start_reservation_date' => $start_datetime,
+            'end_reservation_date' => $end_datetime,
             'status' => 'En Attente'
         ];
-    
+
         if ($this->db->insert('rent', $data)) {
-            $this->session->set_flashdata('success', 'Réservation enregistrée en attente de validation.');
+            $this->session->set_flashdata('success', 'Réservation enregistrée avec succès.');
             redirect('user/dashboard');
         } else {
             $this->session->set_flashdata('error', 'Erreur lors de la réservation.');
             redirect('user/reserver');
         }
-    }    
+    }
 
     public function changement_mdp() {
         $this->check_auth();
@@ -116,32 +174,6 @@ class User_Controller extends CI_Controller {
         }
 
         redirect('user/dashboard');
-    }
-
-    public function dashboard_user() {
-        $this->check_auth();
-    
-        // Récupération des filtres depuis le formulaire
-        $size = $this->input->get('size');
-        $warehouse = $this->input->get('warehouse');
-        $status = $this->input->get('status');
-    
-        // Charger les entrepôts pour le filtrage
-        $data['warehouses'] = $this->User_Model->get_all('warehouse');
-        
-        // Charger les statuts possibles
-        $data['status'] = $this->User_Model->get_distinct_status();
-    
-        // Charger les réservations en fonction des filtres
-        $data['reservations'] = $this->User_Model->get_filtered_reservations(
-            $this->session->userdata('id_user_box'),
-            $size,
-            $warehouse,
-            $status
-        );
-    
-        // Charger la vue
-        $this->load->view('dashboard_user', $data);
     }
     
     public function annuler_reservation($rent_number) {

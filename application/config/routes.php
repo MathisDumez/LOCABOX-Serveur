@@ -55,6 +55,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 #Vitrine_Controller
 $route['vitrine/index'] = 'Vitrine_Controller/index';
+$route['vitrine/index/(:num)'] = 'Vitrine_Controller/index/$1';
 $route['vitrine/detail/(:num)'] = 'Vitrine_Controller/detail/$1';
 
 #Identification_Controller
@@ -66,6 +67,7 @@ $route['id/logout'] = 'Identification_Controller/logout';
 
 #User_Controller
 $route['user/dashboard'] = 'User_Controller/dashboard_user';
+$route['user/dashboard/(:num)'] = 'User_Controller/dashboard_user/$1';
 $route['admin/dashboard'] = 'User_Controller/dashboard_admin';
 $route['user/change_password'] = 'User_Controller/changement_mdp';
 $route['user/update_password'] = 'User_Controller/update_password';
@@ -74,8 +76,8 @@ $route['user/valider_reservation'] = 'User_Controller/valider_reservation';
 $route['user/annuler_reservation/(:num)'] = 'User_Controller/annuler_reservation/$1';
 
 #Box_Controller
-$route['admin/gestion_box/'] = 'Box_Controller/gestion_box/';
-$route['admin/gestion_box/(:num)'] = 'Box_Controller/gestion_box_page/$1';
+$route['admin/gestion_box/(:num)'] = 'Box_Controller/gestion_box/$1';
+$route['admin/gestion_box'] = 'Box_Controller/gestion_box';
 $route['admin/ajouter_box'] = 'Box_Controller/afficher_ajouter_box';
 $route['admin/ajouter_box_submit'] = 'Box_Controller/ajouter_box';
 $route['admin/detail_box/(:num)'] = 'Box_Controller/detail_box/$1';
@@ -86,6 +88,7 @@ $route['admin/modifier_box_submit/(:num)'] = 'Box_Controller/modifier_box_submit
 $route['admin/supprimer_box/(:num)'] = 'Box_Controller/supprimer_box/$1';
 
 #Batiment_Controller
+$route['admin/gestion_batiment/(:num)'] = 'Batiment_Controller/gestion_batiment/$1';
 $route['admin/gestion_batiment'] = 'Batiment_Controller/gestion_batiment';
 $route['admin/ajouter_batiment'] = 'Batiment_Controller/afficher_ajouter_batiment';
 $route['admin/ajouter_batiment_submit'] = 'Batiment_Controller/ajouter_batiment';
@@ -101,6 +104,7 @@ $route['admin/annuler_reservation/(:num)'] = 'Reservation_Controller/annuler_res
 
 #Client_Controller
 $route['admin/gestion_client'] = 'Client_Controller/gestion_client';
+$route['admin/gestion_client/(:num)'] = 'Client_Controller/gestion_client/$1';
 $route['admin/ajouter_client'] = 'Client_Controller/form_add_client';
 $route['admin/insert_client'] = 'Client_Controller/insert_client';
 $route['admin/modifier_client/(:num)'] = 'Client_Controller/form_update_client/$1';

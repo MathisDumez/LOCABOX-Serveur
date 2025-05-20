@@ -5,22 +5,27 @@ class Vitrine_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Vitrine_Model');
-        $this->load->helper('url');
-        $this->load->library('session');
     }
 
     // Page principale avec filtres et tri
-    public function index() {
+    public function index($page = 1) {
         $filters = [
             'size' => $this->input->get('size', true),
             'available' => $this->input->get('available', true),
             'warehouse' => $this->input->get('warehouse', true)
         ];
-        $sort = $this->input->get('sort', true) ?? 'num';
-        $order = $this->input->get('order', true) ?? 'ASC';
 
-        $data['boxes'] = $this->Vitrine_Model->get_filtered_boxes($filters, $sort, $order);
-        $data['warehouses'] = $this->Vitrine_Model->get_warehouses(); // Récupération des bâtiments
+        $per_page = 10;
+        $offset = ($page - 1) * $per_page;
+
+        $total = $this->Vitrine_Model->count_filtered_boxes($filters);
+
+        $base_url = site_url('vitrine/index');
+        init_pagination($base_url, $total, $per_page, 3, $this->input->get());
+
+        $data['boxes'] = $this->Vitrine_Model->get_paginated_filtered_boxes($filters, $per_page, $offset);
+        $data['warehouses'] = $this->Vitrine_Model->get_warehouses();
+        $data['pagination_links'] = $this->pagination->create_links();
 
         $this->load->view('vitrine_box', $data);
     }

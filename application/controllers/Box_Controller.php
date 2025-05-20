@@ -14,28 +14,19 @@ class Box_Controller extends CI_Controller {
         }
     }
 
-    public function gestion_box() {
-        $this->check_admin(); // Vérifie si l'utilisateur est admin
-    
-        $data['boxes'] = $this->Box_Model->get_all_boxes(); // Récupère la liste des box
-        $data['warehouses'] = $this->Box_Model->get_all_warehouses(); // Récupère la liste des bâtiments
-        
-        $this->load->view('gestion_box', $data); // Charge la vue gestion_box.php
-    }
-
-    public function gestion_box_page($page = 1) {
+    public function gestion_box($page = 1) {
         $this->check_admin();
 
-        $limit = 10; // Nombre de box par page
-        $offset = ($page - 1) * $limit;
+        $per_page = 10;
+        $offset = ($page - 1) * $per_page;
 
-        $data['boxes'] = $this->Box_Model->get_boxes_paginated($limit, $offset);
-        $data['warehouses'] = $this->Box_Model->get_all_warehouses();
+        $this->load->helper('pagination_helper');
+        $total = $this->Box_Model->count('box');
+        
+        init_pagination(site_url('admin/gestion_box'), $total, $per_page, 3);
 
-        // Nombre total de box pour pagination
-        $total_boxes = $this->Box_Model->count_all_boxes();
-        $data['total_pages'] = ceil($total_boxes / $limit);
-        $data['current_page'] = $page;
+        $data['boxes'] = $this->Box_Model->get_paginated_boxes($per_page, $offset);
+        $data['pagination_links'] = $this->pagination->create_links();
 
         $this->load->view('gestion_box', $data);
     }

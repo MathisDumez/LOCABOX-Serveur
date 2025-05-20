@@ -77,21 +77,7 @@
         <p>Aucun box disponible.</p>
     <?php endif; ?>
     
-    <div class="pagination">
-        <?php if ($total_pages > 1): ?>
-            <nav>
-                <ul class="pagination">
-                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                        <li class="page-item <?= ($i == $current_page) ? 'active' : '' ?>">
-                            <a class="page-link" href="<?= site_url('admin/gestion_box/' . $i) ?>">
-                                <?= $i ?>
-                            </a>
-                        </li>
-                    <?php endfor; ?>
-                </ul>
-            </nav>
-        <?php endif; ?>
-    </div>
+    <?= $pagination_links ?? ''; ?>
 
 </div>
 

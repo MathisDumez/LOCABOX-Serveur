@@ -106,7 +106,7 @@ class Box_Model extends Main_Model {
         return $this->db->get()->row();
     }
 
-    public function get_boxes_paginated($limit, $offset) {
+    public function get_paginated_boxes($limit, $offset) {
         $this->db->select('
             box.*, 
             warehouse.name as warehouse_name, 
@@ -121,12 +121,8 @@ class Box_Model extends Main_Model {
         $this->db->order_by('warehouse.name', 'ASC');
         $this->db->order_by('box.num', 'ASC');
         $this->db->limit($limit, $offset);
+
         return $this->db->get()->result();
     }
-
-    public function count_all_boxes() {
-        return $this->db->count_all('box');
-    }
-
 }
 ?>

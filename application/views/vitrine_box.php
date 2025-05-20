@@ -54,6 +54,9 @@
     <?php else : ?>
         <p>Aucun box disponible.</p>
     <?php endif; ?>
+
+    <?= $pagination_links ?? ''; ?>
+
 </div>
 
 <?php include('includes/footer.php'); ?>
