@@ -20,13 +20,37 @@ class Box_Controller extends CI_Controller {
         $per_page = 10;
         $offset = ($page - 1) * $per_page;
 
+        $size = $this->input->get('size');
+        $id_warehouse = $this->input->get('id_warehouse');
+        $available = $this->input->get('available');
+        $connection_status = $this->input->get('connection_status');
+
+        $conditions = [];
+        if ($size) {
+            $conditions['box.size'] = $size;
+        }
+        if ($id_warehouse) {
+            $conditions['box.id_warehouse'] = $id_warehouse;
+        }
+        if ($available !== null && $available !== '') {
+            $conditions['box.available'] = $available;
+        }
+
+        $connection_condition = null;
+        if ($connection_status === 'Connecté') {
+            $connection_condition = "TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 60";
+        } elseif ($connection_status === 'Non Connecté') {
+            $connection_condition = "TIMESTAMPDIFF(SECOND, box.state, NOW()) > 60";
+        }
+
         $this->load->helper('pagination_helper');
-        $total = $this->Box_Model->count('box');
-        
+        $total = $this->Box_Model->count_filtered_boxes($conditions, $connection_condition);
         init_pagination(site_url('admin/gestion_box'), $total, $per_page, 3);
 
-        $data['boxes'] = $this->Box_Model->get_paginated_boxes($per_page, $offset);
+        $data['boxes'] = $this->Box_Model->get_paginated_boxes_filtered($per_page, $offset, $conditions, $connection_condition);
         $data['pagination_links'] = $this->pagination->create_links();
+
+        $data['warehouses'] = $this->Box_Model->get_all_warehouses();
 
         $this->load->view('gestion_box', $data);
     }

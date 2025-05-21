@@ -30,6 +30,9 @@
             <?php endif; ?>
         </select>
 
+        <label for="box_num">Numéro de Box :</label>
+        <input type="text" name="box_num" id="box_num" value="<?= isset($_GET['box_num']) ? htmlspecialchars($_GET['box_num']) : ''; ?>">
+
         <label for="status">Statut :</label>
         <select name="status" id="status">
             <option value="">Tous</option>
@@ -55,7 +58,7 @@
                 <th>Début</th>
                 <th>Fin</th>
                 <th>Statut</th>
-                <th>Actions</th>
+                <th>Détails</th>
             </tr>
         </thead>
         <tbody>
@@ -68,15 +71,7 @@
                         <td><?= date('d/m/Y H:i', strtotime($reservation->start_reservation_date)); ?></td>
                         <td><?= date('d/m/Y H:i', strtotime($reservation->end_reservation_date)); ?></td>
                         <td><?= htmlspecialchars($reservation->status); ?></td>
-                        <td>
-                            <div class="action-buttons">
-                                <a href="<?= site_url('admin/modifier_reservation/' . $reservation->rent_number); ?>" class="btn">Modifier</a>
-                                <?php if ($reservation->status == 'En Attente') : ?>
-                                    <a href="<?= site_url('admin/valider_reservation/' . $reservation->rent_number); ?>" class="btn btn-success">Valider</a>
-                                    <a href="<?= site_url('admin/annuler_reservation/' . $reservation->rent_number); ?>" class="btn btn-cancel">Annuler</a>
-                                <?php endif; ?>
-                            </div>
-                        </td>
+                        <td><a href="<?= site_url('admin/detail_reservation/' . $reservation->rent_number); ?>" class="btn">Voir</a></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
@@ -86,6 +81,15 @@
             <?php endif; ?>
         </tbody>
     </table>
+
+    <?= $pagination_links ?? ''; ?>
+
 </div>
+
+<script>
+    setInterval(function() {
+        location.reload();
+    }, 10000); // toutes les 10 secondes
+</script>
 
 <?php include('includes/footer.php'); ?>

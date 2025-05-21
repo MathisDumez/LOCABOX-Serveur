@@ -130,5 +130,36 @@ class User_Model extends Main_Model {
 
         return $this->db->get()->result();
     }
+
+        public function update_reservation_status() {
+        $now = date('Y-m-d H:i:s');
+
+        // 1. En Attente -> Annulée (si la date de début est dépassée)
+        $this->db->where('status', 'En Attente');
+        $this->db->where('start_reservation_date <', $now);
+        $pending_reservations = $this->db->get('rent')->result();
+
+        foreach ($pending_reservations as $reservation) {
+            $this->update_reservation($reservation->rent_number, ['status' => 'Annulée']);
+        }
+
+        // 2. Validée -> En Cours (si la date de début est atteinte ou dépassée)
+        $this->db->where('status', 'Validée');
+        $this->db->where('start_reservation_date <=', $now);
+        $validated_reservations = $this->db->get('rent')->result();
+
+        foreach ($validated_reservations as $reservation) {
+            $this->update_reservation($reservation->rent_number, ['status' => 'En Cours']);
+        }
+
+        // 3. En Cours -> Terminée (si la date de fin est dépassée)
+        $this->db->where('status', 'En Cours');
+        $this->db->where('end_reservation_date <', $now);
+        $ongoing_reservations = $this->db->get('rent')->result();
+
+        foreach ($ongoing_reservations as $reservation) {
+            $this->update_reservation($reservation->rent_number, ['status' => 'Terminée']);
+        }
+    }
 }
 ?>

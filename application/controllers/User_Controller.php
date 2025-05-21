@@ -29,6 +29,9 @@ class User_Controller extends CI_Controller {
     public function dashboard_user($page = 1) {
         $this->check_auth();
 
+        // Mettre à jour les statuts des réservations
+        $this->User_Model->update_reservation_status();
+
         $per_page = 10;
         $offset = ($page - 1) * $per_page;
 
@@ -82,9 +85,7 @@ class User_Controller extends CI_Controller {
 
     public function dashboard_admin() {
         $this->check_admin();
-        //$data['users'] = $this->Admin_Model->get_all_users();
-        //$data['boxes'] = $this->Admin_Model->get_all_boxes();
-        $this->load->view('dashboard_admin');//, $data);
+        $this->load->view('dashboard_admin');
     }
 
     public function reserver() {

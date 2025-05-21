@@ -98,9 +98,12 @@ $route['admin/supprimer_batiment/(:num)'] = 'Batiment_Controller/supprimer_batim
 
 #Reservation_Controller
 $route['admin/gestion_reservation'] = 'Reservation_Controller/gestion_reservation';
+$route['admin/gestion_reservation/(:num)'] = 'Reservation_Controller/gestion_reservation/$1';
+$route['admin/detail_reservation/(:num)'] = 'Reservation_Controller/detail_reservation/$1';
 $route['admin/modifier_reservation/(:num)'] = 'Reservation_Controller/modifier_reservation/$1';
 $route['admin/valider_reservation/(:num)'] = 'Reservation_Controller/valider_reservation/$1';
 $route['admin/annuler_reservation/(:num)'] = 'Reservation_Controller/annuler_reservation/$1';
+$route['admin/supprimer_reservation/(:num)'] = 'Reservation_Controller/supprimer_reservation/$1';
 
 #Client_Controller
 $route['admin/gestion_client'] = 'Client_Controller/gestion_client';

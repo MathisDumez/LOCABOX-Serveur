@@ -1,20 +1,13 @@
 Todo list :
 
-Gestion Box : -> Focus
-    - Modif systeme de filtre
-
-Gestion Reservation : -> Focus
-    - Detail Box
-    - Ajouter une page pour les modifs de reservation
-    - Rajout d'un msg d'alerte avant d'annuler une reservation
-    - Automatiser l'annulation des reservations au date dépasser
-    - Modifier le systeme de filtre
-    - Systeme de page
-
 Gestion Code : -> Focus
     - Generer Code
     - Suppr
     - Systeme de page
+
+Gestion Reservation : -> Fait
+
+Gestion Box : -> Fait
 
 Vitrine_Box/Reservation : -> Fait
 

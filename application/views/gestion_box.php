@@ -18,7 +18,7 @@
         </select>
 
         <label for="warehouse">Bâtiment :</label>
-        <select name="warehouse" id="warehouse">
+        <select name="id_warehouse" id="id_warehouse">
             <option value="">Tous</option>
             <?php foreach ($warehouses as $w) : ?>
                 <option value="<?= $w->id_warehouse; ?>" <?= isset($_GET['warehouse']) && $_GET['warehouse'] == $w->id_warehouse ? 'selected' : ''; ?>>
@@ -32,6 +32,13 @@
             <option value="">Toutes</option>
             <option value="1" <?= isset($_GET['available']) && $_GET['available'] == '1' ? 'selected' : ''; ?>>Disponible</option>
             <option value="0" <?= isset($_GET['available']) && $_GET['available'] == '0' ? 'selected' : ''; ?>>Occupée</option>
+        </select>
+
+        <label for="connection_status">État :</label>
+        <select name="connection_status" id="connection_status">
+            <option value="">Tous</option>
+            <option value="connected" <?= isset($_GET['connection_status']) && $_GET['connection_status'] == 'connected' ? 'selected' : ''; ?>>Connecté</option>
+            <option value="disconnected" <?= isset($_GET['connection_status']) && $_GET['connection_status'] == 'disconnected' ? 'selected' : ''; ?>>Non connecté</option>
         </select>
 
         <button type="submit" class="btn">Filtrer</button>

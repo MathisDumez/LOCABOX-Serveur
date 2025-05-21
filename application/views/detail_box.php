@@ -30,16 +30,16 @@
     </div>
 
     <div class="action-buttons" style="margin-bottom: 20px;">
-        <a href="<?= site_url('admin/modifier_box/' . $box->id_box); ?>" class="btn">Modifier Box</a>
+        <a href="<?= site_url('admin/modifier_box/' . $box->id_box); ?>" class="btn">Modifier</a>
         <a href="#" class="btn btn-cancel" onclick="simpleConfirm('Confirmer la suppression ?', function(confirmé) {
             if (confirmé) {
                 window.location.href = '<?= site_url('admin/supprimer_box/' . $box->id_box); ?>';
             }
         }); return false;">Supprimer</a>
     </div>
-
+    
+    <h3>Historique</h3>
     <div style="margin-bottom: 30px;">
-        <h3>Historique</h3>
         <div class="action-buttons">
             <a href="<?= site_url('admin/acces_box/' . $box->id_box); ?>" class="btn">Accès</a>
             <a href="<?= site_url('admin/alarme_box/' . $box->id_box); ?>" class="btn">Alarmes</a>
@@ -53,9 +53,12 @@
             <p><strong>Du :</strong> <?= date('d/m/Y H:i', strtotime($box->start_reservation_date)) ?></p>
             <p><strong>Au :</strong> <?= date('d/m/Y H:i', strtotime($box->end_reservation_date)) ?></p>
             <p><strong>Statut :</strong> <?= $box->status ?></p>
+
+            <a href="<?= site_url('admin/detail_reservation/' . $box->rent_number) ?>" class="btn" style="margin-bottom: 20px;">Voir détail de la réservation</a>
         <?php else: ?>
             <p>Aucune réservation en cours pour ce box.</p>
         <?php endif; ?>
+        <a href="<?= site_url('admin/gestion_reservation') ?>" class="btn" style="margin-top: 20px;">Retour à la gestion des réservations</a>
     </div>
 </div>
 

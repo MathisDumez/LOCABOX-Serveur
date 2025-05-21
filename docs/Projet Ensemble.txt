@@ -1,8 +1,13 @@
+Project sous CodeIgniter 3
+
 Les controllers hérite tous de CI_Controller :
 Vitrine_Controller
 Identification_Controller
 User_Controller
-Admin_Controller
+Box_Controller
+Batiment_Controller
+Reservation_Controller
+Client_Controller
 Code_Controller
 
 Model :
@@ -10,7 +15,10 @@ Main_Model dont tous les autres Modeles hérite
 Vitrine_Model
 Identification_Model
 User_Model
-Admin_Model
+Box_Model
+Batiment_Model
+Reservation_Model
+Client_Model
 Code_Model
 
 Les vues :
@@ -24,17 +32,26 @@ inscription.php (page d'inscription)
 
 Vues de User_Controller
 dashboard_user.php (Page affichant les reservations en cours)
+dashboard_admin.php (dashboard admin qui sert de menu principale pour naviguer vers les autres vue admin)
 reserver.php (page affichant les detailles de la reservation avant de la confirmer sur cette meme page)
 changement_mdp.php (page de changement de mdp)
 
-Vues de Admin_Controller
-dashboard_admin.php (dashboard admin qui sert de menu principale pour naviguer vers les autres vue admin)
+Vues de Box_Controller
 etat_box.php (page affichant tout les infos sur un box)
 acces_box.php (page affichant l'historique de tout les entrees/sortie dans le box)
 alarme_box.php (page affichant l'historique des alarmes)
+detail_box.php
+modifier_box.php
+
+Vues de Reservation_Controller
 gestion_reservation.php (page affichant l'historique des reversations)
 modifier_reservation.php
+supprimer_reservation.php
+detail_reservation.php
+
+Vues de Client_Controller
 gestion_client.php (page affichant les client; permet de suppr ou modifier des infos)
+modifier_client.php
 
 Vues de Code_Controller
 gestion_code.php (page permettant de creer/supprimer les codes des boxs)

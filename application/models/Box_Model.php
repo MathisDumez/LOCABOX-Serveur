@@ -88,6 +88,7 @@ class Box_Model extends Main_Model {
             box.*,
             warehouse.name AS warehouse_name,
             warehouse.address AS warehouse_address,
+            rent.rent_number,
             rent.start_reservation_date,
             rent.end_reservation_date,
             rent.status,
@@ -106,7 +107,25 @@ class Box_Model extends Main_Model {
         return $this->db->get()->row();
     }
 
-    public function get_paginated_boxes($limit, $offset) {
+    // Compte total filtré (pour pagination)
+    public function count_filtered_boxes(array $conditions = [], ?string $connection_condition = null) {
+        $this->db->from('box');
+        $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
+
+        if (!empty($conditions)) {
+            foreach ($conditions as $field => $value) {
+                $this->db->where($field, $value);
+            }
+        }
+        if ($connection_condition) {
+            $this->db->where($connection_condition);
+        }
+
+        return $this->db->count_all_results();
+    }
+
+    // Récupérer les boxes paginées avec filtre
+    public function get_paginated_boxes_filtered($limit, $offset, array $conditions = [], ?string $connection_condition = null) {
         $this->db->select('
             box.*, 
             warehouse.name as warehouse_name, 
@@ -118,11 +137,22 @@ class Box_Model extends Main_Model {
         ');
         $this->db->from('box');
         $this->db->join('warehouse', 'box.id_warehouse = warehouse.id_warehouse', 'left');
+
+        if (!empty($conditions)) {
+            foreach ($conditions as $field => $value) {
+                $this->db->where($field, $value);
+            }
+        }
+        if ($connection_condition) {
+            $this->db->where($connection_condition);
+        }
+
         $this->db->order_by('warehouse.name', 'ASC');
         $this->db->order_by('box.num', 'ASC');
         $this->db->limit($limit, $offset);
 
         return $this->db->get()->result();
     }
+
 }
 ?>

@@ -56,19 +56,35 @@ class Main_Model extends CI_Model {
     public function count_filtered(string $table, array $conditions = [], array $joins = []) {
         $this->db->from($table);
 
-        // Joins éventuels (ex : ['warehouse' => ['table' => 'warehouse', 'condition' => 'box.id_warehouse = warehouse.id_warehouse', 'type' => 'left']])
+        // Appliquer les jointures
         foreach ($joins as $alias => $join) {
             $this->db->join($join['table'], $join['condition'], $join['type'] ?? 'inner');
         }
 
-        if (!empty($conditions)) {
-            foreach ($conditions as $field => $value) {
-                if (is_array($value) && count($value) === 2 && in_array($value[0], ['<', '>', '<=', '>=', '!=', 'like'])) {
-                    // condition spéciale : opérateur et valeur
-                    $this->db->where("$field {$value[0]}", $value[1]);
-                } else {
-                    $this->db->where($field, $value);
-                }
+        // Mapper les filtres vers les colonnes SQL réelles
+        $filter_mapping = [
+            'email' => 'user_box.email',
+            'size' => 'box.size',
+            'warehouse' => 'warehouse.id_warehouse',
+            'status' => 'rent.status',
+            'start_date' => 'rent.start_reservation_date',
+            'end_date' => 'rent.end_reservation_date',
+        ];
+
+        foreach ($conditions as $key => $value) {
+            if (empty($value)) continue; // Ne pas appliquer les filtres vides
+
+            if (!isset($filter_mapping[$key])) continue; // Clé inconnue
+            $column = $filter_mapping[$key];
+
+            if ($key === 'email') {
+                $this->db->like($column, $value);
+            } elseif ($key === 'start_date') {
+                $this->db->where("$column >=", $value);
+            } elseif ($key === 'end_date') {
+                $this->db->where($column . " <=", $value);
+            } else {
+                $this->db->where($column, $value);
             }
         }
 

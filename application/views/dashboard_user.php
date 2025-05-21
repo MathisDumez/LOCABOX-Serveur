@@ -5,9 +5,8 @@
     
     <?php include('includes/message.php'); ?>
 
-    <div class="change-password">
-        <a href="<?= site_url('user/change_password'); ?>" class="btn">Changer de mot de passe</a>
-    </div>
+    <a href="<?= site_url('user/change_password'); ?>" class="btn">Changer de mot de passe</a>
+    <a href="<?= site_url('user/dashboard'); ?>" class="btn">Mettre à jour les statuts</a>
 
     <form method="GET" action="<?= site_url('user/dashboard'); ?>">
         <label for="size">Taille :</label>
@@ -92,5 +91,11 @@
     <?= $pagination_links ?? ''; ?>
 
 </div>
+
+<script>
+    setInterval(function() {
+        location.reload();
+    }, 10000); // toutes les 10 secondes
+</script>
 
 <?php include('includes/footer.php'); ?>
