@@ -4,7 +4,6 @@ class Batiment_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Batiment_Model');
-        $this->load->library(['session', 'form_validation']);
     }
 
     private function check_admin() {

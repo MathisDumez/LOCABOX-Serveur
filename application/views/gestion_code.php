@@ -5,6 +5,8 @@
 
     <?php include('includes/message.php'); ?>
 
+    <a href="<?= site_url('admin/dashboard'); ?>" class="btn">Retour au tableau de bord</a>
+
     <table>
         <thead>
             <tr>
@@ -12,6 +14,7 @@
                 <th>Box</th>
                 <th>Code Actuel</th>
                 <th>Action</th>
+                <th>Historique</th>
             </tr>
         </thead>
         <tbody>
@@ -22,17 +25,33 @@
                         <td>Box <?= htmlspecialchars($box->num); ?></td>
                         <td><?= htmlspecialchars($box->current_code ?? 'Aucun'); ?></td>
                         <td>
-                            <a href="<?= site_url('Code_Controller/generate_code/' . htmlspecialchars($box->num)); ?>" class="btn">Générer un Nouveau Code</a>
+                            <a href="#" class="btn" onclick="simpleConfirm('Confirmer la génération d\'un code ?', function(confirmé) {
+                                if (confirmé) {
+                                    window.location.href = '<?= site_url('admin/generer_code/' . htmlspecialchars($box->id_box)); ?>';
+                                }
+                            }); return false;">Générer</a>
+                        </td>
+                        <td>
+                            <a href="<?= site_url('admin/historique_code/' . htmlspecialchars($box->id_box)); ?>" class="btn">Voir</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="3">Aucun box enregistré.</td>
+                    <td colspan="5">Aucun box enregistré.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
     </table>
+
+    <?= $pagination_links ?? ''; ?>
+
 </div>
+
+<script>
+    setInterval(function() {
+        location.reload();
+    }, 10000); // toutes les 10 secondes
+</script>
 
 <?php include('includes/footer.php'); ?>

@@ -4,7 +4,6 @@ class Identification_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Identification_Model');
-        $this->load->library(['session', 'form_validation']);
         $this->lang->load('form_validation', 'french');
         error_reporting(E_ALL);
         ini_set('display_errors', 1);

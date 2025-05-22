@@ -116,3 +116,6 @@ $route['admin/supprimer_client/(:num)'] = 'Client_Controller/delete_user/$1';
 
 #Code_Controller
 $route['admin/gestion_code'] = 'Code_Controller/gestion_code';
+$route['admin/gestion_code/(:num)'] = 'Code_Controller/gestion_code/$1';
+$route['admin/generer_code/(:num)'] = 'Code_Controller/generer_code/$1';
+$route['admin/historique_code/(:num)'] = 'Code_Controller/historique_code/$1';

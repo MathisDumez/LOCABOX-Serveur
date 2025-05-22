@@ -30,10 +30,10 @@
     </div>
 
     <div class="action-buttons" style="margin-bottom: 20px;">
-        <a href="<?= site_url('admin/modifier_box/' . $box->id_box); ?>" class="btn">Modifier</a>
+        <a href="<?= site_url('admin/modifier_box/' . htmlspecialchars($box->id_box)); ?>" class="btn">Modifier</a>
         <a href="#" class="btn btn-cancel" onclick="simpleConfirm('Confirmer la suppression ?', function(confirmé) {
             if (confirmé) {
-                window.location.href = '<?= site_url('admin/supprimer_box/' . $box->id_box); ?>';
+                window.location.href = '<?= site_url('admin/supprimer_box/' . htmlspecialchars($box->id_box)); ?>';
             }
         }); return false;">Supprimer</a>
     </div>
@@ -41,8 +41,9 @@
     <h3>Historique</h3>
     <div style="margin-bottom: 30px;">
         <div class="action-buttons">
-            <a href="<?= site_url('admin/acces_box/' . $box->id_box); ?>" class="btn">Accès</a>
-            <a href="<?= site_url('admin/alarme_box/' . $box->id_box); ?>" class="btn">Alarmes</a>
+            <a href="<?= site_url('admin/acces_box/' . htmlspecialchars($box->id_box)); ?>" class="btn">Accès</a>
+            <a href="<?= site_url('admin/alarme_box/' . htmlspecialchars($box->id_box)); ?>" class="btn">Alarmes</a>
+            <a href="<?= site_url('admin/historique_code/' . htmlspecialchars($box->id_box)); ?>" class="btn">Codes</a>
         </div>
     </div>
 
