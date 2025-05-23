@@ -1,11 +1,9 @@
 Todo list :
 
-Gestion Code : -> Focus
-    - Systeme de page
-    - Filtre. Facultatif
-
 Gestion Box : -> Focus 
     - Pagination logs alarmes et Accès
+
+Gestion Code : -> Fait
 
 Gestion Reservation : -> Fait
 

@@ -66,9 +66,9 @@ $route['id/login'] = 'Identification_Controller/login';
 $route['id/logout'] = 'Identification_Controller/logout';
 
 #User_Controller
+$route['admin/dashboard'] = 'User_Controller/dashboard_admin';
 $route['user/dashboard'] = 'User_Controller/dashboard_user';
 $route['user/dashboard/(:num)'] = 'User_Controller/dashboard_user/$1';
-$route['admin/dashboard'] = 'User_Controller/dashboard_admin';
 $route['user/change_password'] = 'User_Controller/changement_mdp';
 $route['user/update_password'] = 'User_Controller/update_password';
 $route['user/reserver'] = 'User_Controller/reserver';
@@ -81,11 +81,13 @@ $route['admin/gestion_box'] = 'Box_Controller/gestion_box';
 $route['admin/ajouter_box'] = 'Box_Controller/afficher_ajouter_box';
 $route['admin/ajouter_box_submit'] = 'Box_Controller/ajouter_box';
 $route['admin/detail_box/(:num)'] = 'Box_Controller/detail_box/$1';
-$route['admin/acces_box/(:num)'] = 'Box_Controller/acces_box/$1';
-$route['admin/alarme_box/(:num)'] = 'Box_Controller/alarme_box/$1';
 $route['admin/modifier_box/(:num)'] = 'Box_Controller/modifier_box/$1';
 $route['admin/modifier_box_submit/(:num)'] = 'Box_Controller/modifier_box_submit/$1';
 $route['admin/supprimer_box/(:num)'] = 'Box_Controller/supprimer_box/$1';
+$route['admin/acces_box/(:num)'] = 'Box_Controller/acces_box/$1';
+$route['admin/acces_box/(:num)/(:num)'] = 'Box_Controller/acces_box/$1/$2';
+$route['admin/alarme_box/(:num)'] = 'Box_Controller/alarme_box/$1';
+$route['admin/alarme_box/(:num)/(:num)'] = 'Box_Controller/alarme_box/$1/$2';
 
 #Batiment_Controller
 $route['admin/gestion_batiment/(:num)'] = 'Batiment_Controller/gestion_batiment/$1';
@@ -119,3 +121,4 @@ $route['admin/gestion_code'] = 'Code_Controller/gestion_code';
 $route['admin/gestion_code/(:num)'] = 'Code_Controller/gestion_code/$1';
 $route['admin/generer_code/(:num)'] = 'Code_Controller/generer_code/$1';
 $route['admin/historique_code/(:num)'] = 'Code_Controller/historique_code/$1';
+$route['admin/historique_code/(:num)/(:num)'] = 'Code_Controller/historique_code/$1/$2';

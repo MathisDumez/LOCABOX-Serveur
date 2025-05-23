@@ -35,6 +35,9 @@
             <?php endif; ?>
         </tbody>
     </table>
+
+    <?= $pagination_links ?? ''; ?>
+
 </div>
 
 <?php include('includes/footer.php'); ?>

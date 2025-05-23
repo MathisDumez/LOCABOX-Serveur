@@ -65,19 +65,37 @@ class Box_Controller extends CI_Controller {
         redirect('admin/dashboard');
     }
 
-    public function acces_box($id_box) {
-        $this->check_admin(); // Vérifie que l'utilisateur est admin
+    public function acces_box($id_box, $page = 1) {
+        $this->check_admin();
 
-        $data['access_logs'] = $this->Box_Model->get_access_logs_by_box($id_box);
+        $this->load->helper('pagination_helper');
+        $per_page = 10;
+        $page = is_numeric($page) ? $page : 1;
+        $offset = ($page - 1) * $per_page;
+
+        $total_logs = $this->Box_Model->count_access_logs_by_box($id_box);
+        init_pagination(site_url("admin/acces_box/$id_box"), $total_logs, $per_page, 4);
+
+        $data['access_logs'] = $this->Box_Model->get_access_logs_by_box_paginated($id_box, $per_page, $offset);
+        $data['pagination_links'] = $this->pagination->create_links();
         $data['box'] = $this->Box_Model->get_by_id('box', $id_box, 'id_box');
 
         $this->load->view('acces_box', $data);
     }
-    
-    public function alarme_box($id_box) {
-        $this->check_admin(); // Vérifie que l'utilisateur est admin
 
-        $data['alarms'] = $this->Box_Model->get_alarm_logs_by_box($id_box);
+    public function alarme_box($id_box, $page = 1) {
+        $this->check_admin();
+
+        $this->load->helper('pagination_helper');
+        $per_page = 10;
+        $page = is_numeric($page) ? $page : 1;
+        $offset = ($page - 1) * $per_page;
+
+        $total_alarms = $this->Box_Model->count_alarm_logs_by_box($id_box);
+        init_pagination(site_url("admin/alarme_box/$id_box"), $total_alarms, $per_page, 4);
+
+        $data['alarms'] = $this->Box_Model->get_alarm_logs_by_box_paginated($id_box, $per_page, $offset);
+        $data['pagination_links'] = $this->pagination->create_links();
         $data['box'] = $this->Box_Model->get_by_id('box', $id_box, 'id_box');
 
         $this->load->view('alarme_box', $data);
@@ -139,49 +157,6 @@ class Box_Controller extends CI_Controller {
         } else {
             $this->session->set_flashdata('error', 'Erreur lors de l\'ajout du box.');
             redirect('admin/ajouter_box');
-        }
-    }
-
-    public function afficher_ajouter_batiment() {
-        $this->check_admin();
-
-        $data['warehouses'] = $this->Box_Model->get_all_warehouses();
-
-        $this->load->view('ajouter_batiment', $data);
-    }
-    
-    public function ajouter_batiment() {
-        $this->check_admin();
-    
-        $this->form_validation->set_rules('name', 'Nom du bâtiment', 'required|max_length[50]');
-        $this->form_validation->set_rules('address', 'Adresse', 'required|max_length[50]');
-    
-        if ($this->form_validation->run() === FALSE) {
-            $this->session->set_flashdata('error', validation_errors());
-            redirect('admin/ajouter_batiment');
-        }
-    
-        $name = $this->input->post('name');
-        $address = $this->input->post('address');
-    
-        // Vérifie l'unicité du bâtiment
-        $existing = $this->Box_Model->get_where('warehouse', ['name' => $name, 'address' => $address]);
-        if (!empty($existing)) {
-            $this->session->set_flashdata('error', 'Ce bâtiment existe déjà.');
-            redirect('admin/ajouter_batiment');
-        }
-    
-        $success = $this->Box_Model->insert('warehouse', [
-            'name' => $name,
-            'address' => $address
-        ]);
-    
-        if ($success) {
-            $this->session->set_flashdata('success', 'Bâtiment ajouté avec succès.');
-            redirect('admin/ajouter_batiment');
-        } else {
-            $this->session->set_flashdata('error', 'Erreur lors de l\'ajout du bâtiment.');
-            redirect('admin/ajouter_batiment');
         }
     }
     

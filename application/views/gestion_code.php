@@ -7,6 +7,26 @@
 
     <a href="<?= site_url('admin/dashboard'); ?>" class="btn">Retour au tableau de bord</a>
 
+    <form method="GET" action="<?= site_url('admin/gestion_code'); ?>">
+        <label for="warehouse">Bâtiment :</label>
+        <select name="warehouse" id="warehouse">
+            <option value="">Tous</option>
+            <?php if (!empty($warehouses)) : ?>
+                <?php foreach ($warehouses as $w) : ?>
+                    <option value="<?= $w->id_warehouse; ?>" <?= isset($_GET['warehouse']) && $_GET['warehouse'] == $w->id_warehouse ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($w->name); ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+
+        <label for="box_num">Numéro de Box :</label>
+        <input type="text" name="box_num" id="box_num" value="<?= isset($_GET['box_num']) ? htmlspecialchars($_GET['box_num']) : ''; ?>">
+
+        <button type="submit" class="btn">Filtrer</button>
+        <a href="<?= site_url('admin/gestion_code'); ?>" class="btn">Réinitialiser</a>
+    </form>
+
     <table>
         <thead>
             <tr>

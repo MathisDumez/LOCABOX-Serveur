@@ -15,18 +15,24 @@ class Code_Controller extends CI_Controller {
 
     public function gestion_code($page = 1) {
         $this->check_admin();
+        $this->load->helper('pagination_helper');
 
         $per_page = 10;
         $page = $this->uri->segment(3) ?? 1;
         $offset = ($page - 1) * $per_page;
 
-        $total_boxes = $this->Code_Model->count_all_boxes();
+        // Récupération des filtres depuis $_GET
+        $filters = [
+            'warehouse' => $this->input->get('warehouse', TRUE),
+            'box_num' => $this->input->get('box_num', TRUE)
+        ];
+
+        $total_boxes = $this->Code_Model->count_filtered_boxes($filters);
         init_pagination(site_url('admin/gestion_code'), $total_boxes, $per_page, 3);
 
-        $data['boxes'] = $this->Code_Model->get_all_boxes_with_warehouse($per_page, $offset);
+        $data['boxes'] = $this->Code_Model->get_filtered_boxes($per_page, $offset, $filters);
         $data['pagination_links'] = $this->pagination->create_links();
-
-        $this->load->helper('pagination_helper');
+        $data['warehouses'] = $this->Code_Model->get_all_warehouses(); // pour <select>
 
         $this->load->view('gestion_code', $data);
     }
@@ -63,14 +69,21 @@ class Code_Controller extends CI_Controller {
         return $used ? false : $code;
     }
 
-    public function historique_code($id_box) {
+    public function historique_code($id_box, $page = 1) {
         $this->check_admin();
+        $this->load->helper('pagination_helper');
 
-        $data['history'] = $this->Code_Model->get_code_history($id_box);
+        $per_page = 10;
+        $page = is_numeric($page) ? $page : 1;
+        $offset = ($page - 1) * $per_page;
 
-        // On récupère les infos du box pour l'affichage dans la vue
-        $this->db->where('id_box', $id_box);
-        $data['box'] = $this->db->get('box')->row();
+        $total_entries = $this->Code_Model->count_code_history($id_box);
+        init_pagination(site_url("admin/historique_code/$id_box"), $total_entries, $per_page, 4);
+
+        $data['history'] = $this->Code_Model->get_code_history_paginated($id_box, $per_page, $offset);
+        $data['pagination_links'] = $this->pagination->create_links();
+
+        $data['box'] = $this->db->get_where('box', ['id_box' => $id_box])->row();
 
         $this->load->view('historique_code', $data);
     }
