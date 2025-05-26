@@ -37,10 +37,11 @@ class Code_Controller extends CI_Controller {
         $this->load->view('gestion_code', $data);
     }
 
-    public function generer_code($num) {
+    public function generer_code($id_box) {
         $this->check_admin();
 
-        $box = $this->Code_Model->get_box_by_num($num);
+        $box = $this->Code_Model->get_box_by_id($id_box);
+
         if (!$box) {
             show_error("Box introuvable.");
         }
@@ -54,7 +55,7 @@ class Code_Controller extends CI_Controller {
         $this->Code_Model->update_current_code($box->id_box, $new_code);
         $this->Code_Model->insert_code_log($box->id_box, $new_code);
 
-        $this->session->set_flashdata('success', "Nouveau code généré pour le Box {$box->num} : $new_code");
+        $this->session->set_flashdata('success', "Nouveau code généré pour le Box {$box->num} {$box->warehouse_name} : $new_code");
         redirect('admin/gestion_code');
     }
 

@@ -1,9 +1,8 @@
 Todo list :
 
-Gestion Box : -> Focus 
-    - Pagination logs alarmes et Accès
-
 Gestion Code : -> Fait
+
+Gestion Box : -> Fait
 
 Gestion Reservation : -> Fait
 

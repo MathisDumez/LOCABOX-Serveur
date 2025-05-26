@@ -52,6 +52,14 @@ class Code_Model extends Main_Model {
         return $this->db->count_all_results('code_log') > 0;
     }
 
+    public function get_box_by_id($id_box) {
+        $this->db->select('box.*, warehouse.name AS warehouse_name');
+        $this->db->from('box');
+        $this->db->join('warehouse', 'warehouse.id_warehouse = box.id_warehouse');
+        $this->db->where('box.id_box', $id_box);
+        return $this->db->get()->row();
+    }
+
     public function update_current_code($id_box, $code) {
         $this->db->where('id_box', $id_box);
         return $this->db->update('box', ['current_code' => $code]);
@@ -63,10 +71,6 @@ class Code_Model extends Main_Model {
             'code' => $code,
             'code_date' => date('Y-m-d H:i:s')
         ]);
-    }
-
-    public function get_box_by_num($num) {
-        return $this->db->get_where('box', ['num' => $num])->row();
     }
 
     public function get_code_history_paginated($id_box, $limit, $offset) {

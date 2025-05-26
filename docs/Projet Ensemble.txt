@@ -57,10 +57,10 @@ Vues de Code_Controller
 gestion_code.php (page permettant de creer/supprimer les codes des boxs)
 historique_code.php (page affichant l'historique des box)
 
-include:
+dossier include:
 header.php
 footer.php
-message.php
+message.php (gestion msg erreur/confirmation)
 
 MLD de la BDD :
 user_box = (id_user_box INT AUTO_INCREMENT, email VARCHAR(50) , password VARCHAR(100) , admin BOOLEAN, level INT, fcm VARCHAR(200) );
