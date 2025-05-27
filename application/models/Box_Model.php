@@ -16,7 +16,7 @@ class Box_Model extends Main_Model {
             box.*, 
             warehouse.name as warehouse_name, 
             IF(
-                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 120,
+                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 60,
                 "Connecté",
                 "Non Connecté"
             ) as connection_status
@@ -108,7 +108,7 @@ class Box_Model extends Main_Model {
             rent.status,
             user_box.email,
             IF(
-                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 120,
+                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 60,
                 "Connecté",
                 "Non Connecté"
             ) as connection_status
@@ -144,7 +144,7 @@ class Box_Model extends Main_Model {
             box.*, 
             warehouse.name as warehouse_name, 
             IF(
-                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 120,
+                TIMESTAMPDIFF(SECOND, box.state, NOW()) <= 60,
                 "Connecté",
                 "Non Connecté"
             ) as connection_status
