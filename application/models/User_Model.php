@@ -131,7 +131,16 @@ class User_Model extends Main_Model {
         return $this->db->get()->result();
     }
 
-        public function update_reservation_status() {
+    public function update_reservation($rent_number, $data) {
+        if (!$rent_number || empty($data)) {
+            return false;
+        }
+
+        $this->db->where('rent_number', $rent_number);
+        return $this->db->update('rent', $data);
+    }
+
+    public function update_reservation_status() {
         $now = date('Y-m-d H:i:s');
 
         // 1. En Attente -> Annulée (si la date de début est dépassée)
