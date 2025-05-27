@@ -4,7 +4,9 @@ Gestion Code : -> Fait
 
 Gestion Box : -> Fait
 
-Gestion Reservation : -> Fait
+Gestion Reservation :
+    - Verif avant de valider une Reservation si une est deja existante
+    - Bug annulation Reservation en cours
 
 Vitrine_Box/Reservation : -> Fait
 
