@@ -10,7 +10,7 @@ Gestion Reservation :
 
 Vitrine_Box/Reservation : -> Fait
 
-Facultatif :
+Facultatif (Si assez de temps pour) :
 
 User :
     - dashboard_user ? Facultatif
